@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>常用UI设计原则与核心术语</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:#0a0a0f;color:#e0e0e0;line-height:1.8}
+
+/* ===== 封面 ===== */
+.cover{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:linear-gradient(135deg,#0a0a1a 0%,#1a0a2e 30%,#0a1a3e 60%,#0a0a1a 100%)}
+.cover::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 40%,rgba(99,102,241,.15) 0%,transparent 50%),radial-gradient(circle at 70% 60%,rgba(168,85,247,.12) 0%,transparent 50%);z-index:1}
+.cover-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(99,102,241,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(99,102,241,.06) 1px,transparent 1px);background-size:60px 60px;z-index:1}
+.cover-content{position:relative;z-index:2;text-align:center;padding:40px}
+.cover h1{font-size:clamp(36px,6vw,64px);font-weight:800;background:linear-gradient(135deg,#818cf8,#a78bfa,#c084fc,#818cf8);background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 6s ease infinite;letter-spacing:4px}
+@keyframes shimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.cover .subtitle{font-size:clamp(14px,2vw,20px);color:rgba(196,181,253,.7);margin-top:16px;letter-spacing:6px;font-weight:300}
+.cover .tags{margin-top:32px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.cover .tag{padding:6px 20px;border:1px solid rgba(139,92,246,.4);border-radius:20px;font-size:13px;color:rgba(196,181,253,.8);backdrop-filter:blur(4px);background:rgba(139,92,246,.08)}
+.cover .scroll-hint{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);z-index:2;color:rgba(196,181,253,.5);font-size:13px;animation:bounce 2s ease infinite}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-8px)}}
+
+/* ===== 主容器 ===== */
+.main{max-width:1000px;margin:0 auto;padding:0 24px 80px}
+
+/* ===== 前言 ===== */
+.preface{margin:60px 0;padding:36px 40px;background:linear-gradient(135deg,rgba(99,102,241,.08),rgba(168,85,247,.06));border:1px solid rgba(139,92,246,.2);border-radius:16px;position:relative}
+.preface::before{content:'📖';position:absolute;top:-18px;left:30px;font-size:28px;background:#0a0a0f;padding:0 10px}
+.preface p{color:rgba(224,224,224,.8);font-size:15px}
+
+/* ===== 章节标题 ===== */
+.chapter{margin-top:80px}
+.chapter-title{display:flex;align-items:center;gap:16px;margin-bottom:40px;padding-bottom:16px;border-bottom:2px solid rgba(139,92,246,.3)}
+.chapter-num{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:#fff;flex-shrink:0}
+.chapter-num.c1{background:linear-gradient(135deg,#6366f1,#8b5cf6)}
+.chapter-num.c2{background:linear-gradient(135deg,#3b82f6,#06b6d4)}
+.chapter-num.c3{background:linear-gradient(135deg,#8b5cf6,#ec4899)}
+.chapter-num.c4{background:linear-gradient(135deg,#10b981,#34d399)}
+.chapter-title h2{font-size:28px;font-weight:700;color:#e8e0f0}
+
+/* ===== 小节标题 ===== */
+.section{margin:48px 0}
+.section-head{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+.section-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.section-head h3{font-size:22px;font-weight:600;color:#c4b5fd}
+.section-desc{margin-bottom:20px;padding:14px 20px;background:rgba(99,102,241,.06);border-radius:10px;border-left:3px solid #6366f1;font-size:14px;color:rgba(196,181,253,.7)}
+
+/* ===== 原则卡片 ===== */
+.principle-grid{display:grid;gap:16px}
+.principle{background:rgba(30,30,50,.6);border:1px solid rgba(139,92,246,.15);border-radius:14px;padding:24px 28px;transition:all .3s ease;position:relative;overflow:hidden}
+.principle:hover{border-color:rgba(139,92,246,.4);transform:translateY(-2px);box-shadow:0 8px 30px rgba(139,92,246,.1)}
+.principle::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;border-radius:2px}
+.principle .num{position:absolute;top:16px;right:20px;font-size:42px;font-weight:800;color:rgba(139,92,246,.08);line-height:1}
+.principle h4{font-size:17px;font-weight:600;color:#a78bfa;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.principle h4 .badge{font-size:11px;padding:2px 8px;border-radius:10px;background:rgba(139,92,246,.15);color:#c4b5fd;font-weight:500}
+.principle .def{font-size:14px;color:rgba(224,224,224,.75);margin-bottom:10px}
+.principle .app{font-size:13px;color:rgba(168,162,186,.6);padding-left:14px;border-left:2px solid rgba(139,92,246,.2)}
+
+/* 原则卡片渐变左边框色 */
+.principle.p1::before{background:linear-gradient(180deg,#6366f1,#818cf8)}
+.principle.p2::before{background:linear-gradient(180deg,#8b5cf6,#a78bfa)}
+.principle.p3::before{background:linear-gradient(180deg,#7c3aed,#a855f7)}
+.principle.p4::before{background:linear-gradient(180deg,#6366f1,#3b82f6)}
+.principle.p5::before{background:linear-gradient(180deg,#ec4899,#f472b6)}
+.principle.p6::before{background:linear-gradient(180deg,#14b8a6,#2dd4bf)}
+.principle.p7::before{background:linear-gradient(180deg,#f59e0b,#fbbf24)}
+.principle.p8::before{background:linear-gradient(180deg,#06b6d4,#22d3ee)}
+.principle.p9::before{background:linear-gradient(180deg,#ef4444,#f87171)}
+.principle.p10::before{background:linear-gradient(180deg,#10b981,#34d399)}
+
+/* ===== CSS 示意图 ===== */
+.demo-box{margin:24px 0;padding:24px;background:rgba(15,15,30,.8);border:1px solid rgba(139,92,246,.12);border-radius:14px}
+.demo-box .demo-title{font-size:12px;color:rgba(139,92,246,.6);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;font-weight:600}
+
+/* 尼尔森原则示意图 */
+.nielsen-visual{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+@media(max-width:700px){.nielsen-visual{grid-template-columns:repeat(2,1fr)}}
+.nv-item{padding:14px 10px;border-radius:10px;text-align:center;font-size:11px;color:rgba(255,255,255,.85);font-weight:500;position:relative;transition:transform .2s}
+.nv-item:hover{transform:scale(1.05)}
+.nv-item .nv-icon{font-size:24px;display:block;margin-bottom:6px}
+.nv-item:nth-child(1){background:linear-gradient(135deg,rgba(99,102,241,.4),rgba(99,102,241,.15))}
+.nv-item:nth-child(2){background:linear-gradient(135deg,rgba(139,92,246,.4),rgba(139,92,246,.15))}
+.nv-item:nth-child(3){background:linear-gradient(135deg,rgba(168,85,247,.4),rgba(168,85,247,.15))}
+.nv-item:nth-child(4){background:linear-gradient(135deg,rgba(59,130,246,.4),rgba(59,130,246,.15))}
+.nv-item:nth-child(5){background:linear-gradient(135deg,rgba(236,72,153,.4),rgba(236,72,153,.15))}
+.nv-item:nth-child(6){background:linear-gradient(135deg,rgba(20,184,166,.4),rgba(20,184,166,.15))}
+.nv-item:nth-child(7){background:linear-gradient(135deg,rgba(245,158,11,.4),rgba(245,158,11,.15))}
+.nv-item:nth-child(8){background:linear-gradient(135deg,rgba(6,182,212,.4),rgba(6,182,212,.15))}
+.nv-item:nth-child(9){background:linear-gradient(135deg,rgba(239,68,68,.4),rgba(239,68,68,.15))}
+.nv-item:nth-child(10){background:linear-gradient(135deg,rgba(16,185,129,.4),rgba(16,185,129,.15))}
+
+/* 格式塔示意图 */
+.gestalt-demos{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0}
+@media(max-width:700px){.gestalt-demos{grid-template-columns:repeat(2,1fr)}}
+.g-demo{background:rgba(20,20,40,.8);border:1px solid rgba(99,102,241,.15);border-radius:12px;padding:20px;text-align:center}
+.g-demo .g-label{font-size:12px;color:#818cf8;margin-top:12px;font-weight:600}
+.g-demo .g-visual{height:80px;display:flex;align-items:center;justify-content:center;gap:6px}
+
+/* 接近性 */
+.prox-group{display:flex;gap:4px}
+.prox-gap{width:20px}
+.prox-dot{width:16px;height:16px;border-radius:50%;background:#818cf8}
+
+/* 相似性 */
+.sim-row{display:flex;gap:6px}
+.sim-circle{width:16px;height:16px;border-radius:50%;background:#818cf8}
+.sim-square{width:16px;height:16px;border-radius:3px;background:#f472b6}
+
+/* 连续性 */
+.cont-line{width:100%;height:3px;border-radius:2px;position:relative}
+.cont-line::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#6366f1,#a78bfa,#c084fc);border-radius:2px}
+.cont-dots{display:flex;gap:20px;justify-content:center;margin-top:8px}
+.cont-dot{width:8px;height:8px;border-radius:50%;background:#a78bfa}
+
+/* 闭合性 */
+.closure-shape{width:60px;height:60px;border:3px dashed rgba(139,92,246,.5);border-radius:50%;position:relative}
+.closure-shape::before{content:'';position:absolute;top:8px;right:-2px;width:20px;height:20px;background:#0a0a0f}
+
+/* 对称性 */
+.sym-box{display:flex;gap:4px;align-items:center}
+.sym-half{width:30px;height:50px;border-radius:8px 0 0 8px}
+.sym-half.l{background:linear-gradient(180deg,#6366f1,#818cf8)}
+.sym-half.r{background:linear-gradient(180deg,#818cf8,#6366f1);border-radius:0 8px 8px 0}
+.sym-line{width:1px;height:54px;background:rgba(255,255,255,.3)}
+
+/* 主体/背景 */
+.fg-bg{position:relative;width:80px;height:60px;background:rgba(99,102,241,.1);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.fg-rect{width:40px;height:30px;background:linear-gradient(135deg,#6366f1,#a78bfa);border-radius:6px;box-shadow:0 4px 15px rgba(99,102,241,.4)}
+
+/* 视觉5原则示意 */
+.vis5-demos{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:20px 0}
+@media(max-width:700px){.vis5-demos{grid-template-columns:repeat(2,1fr)}}
+.v5-demo{background:rgba(20,20,40,.8);border:1px solid rgba(139,92,246,.15);border-radius:12px;padding:18px 14px;text-align:center}
+.v5-demo .v5-label{font-size:11px;color:#a78bfa;margin-top:10px;font-weight:600}
+.v5-demo .v5-visual{height:60px;display:flex;align-items:center;justify-content:center}
+
+/* 对齐 */
+.align-lines{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.align-line{height:6px;border-radius:3px;background:#6366f1}
+.align-guide{position:absolute;left:0;top:0;width:1px;height:100%;background:rgba(239,68,68,.4);z-index:1}
+
+/* 间距 */
+.spacing-boxes{display:flex;gap:8px;align-items:center}
+.sp-box{width:20px;height:28px;border-radius:4px;background:#818cf8}
+.sp-arrow{font-size:10px;color:rgba(245,158,11,.6)}
+
+/* 对比 */
+.contrast-pair{display:flex;gap:8px;align-items:center}
+.ctr-big{width:32px;height:32px;border-radius:8px;background:#a78bfa;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff}
+.ctr-small{width:18px;height:18px;border-radius:4px;background:rgba(139,92,246,.25);display:flex;align-items:center;justify-content:center;font-size:9px;color:rgba(255,255,255,.6)}
+
+/* 重复 */
+.repeat-row{display:flex;gap:6px}
+.rpt-item{width:18px;height:18px;border-radius:50%;background:#6366f1;border:2px solid rgba(99,102,241,.4)}
+
+/* 留白 */
+.whitespace-demo{display:flex;align-items:center;gap:16px}
+.ws-content{width:30px;height:30px;border-radius:6px;background:#818cf8}
+.ws-space{flex:1;height:1px;border-top:1px dashed rgba(139,92,246,.3)}
+
+/* ===== 术语表 ===== */
+.term-group{display:grid;gap:12px;margin:16px 0}
+.term{display:flex;gap:16px;padding:16px 20px;background:rgba(30,30,50,.5);border:1px solid rgba(99,102,241,.1);border-radius:12px;transition:all .3s}
+.term:hover{border-color:rgba(99,102,241,.3);background:rgba(30,30,50,.7)}
+.term .t-num{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0}
+.term .t-num.tc1{background:linear-gradient(135deg,#6366f1,#818cf8)}
+.term .t-num.tc2{background:linear-gradient(135deg,#3b82f6,#06b6d4)}
+.term .t-num.tc3{background:linear-gradient(135deg,#8b5cf6,#ec4899)}
+.term .t-num.tc4{background:linear-gradient(135deg,#f59e0b,#ef4444)}
+.term .t-body{flex:1}
+.term .t-name{font-size:15px;font-weight:600;color:#c4b5fd;margin-bottom:4px}
+.term .t-def{font-size:13px;color:rgba(224,224,224,.65)}
+
+/* ===== 米勒定律 ===== */
+.miller-visual{display:flex;align-items:center;justify-content:center;gap:6px;padding:20px;flex-wrap:wrap}
+.miller-slot{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#fff;transition:transform .2s}
+.miller-slot:hover{transform:scale(1.15)}
+.miller-slot.active{box-shadow:0 0 20px rgba(139,92,246,.4)}
+.miller-range{margin-top:12px;text-align:center;font-size:13px;color:rgba(168,162,186,.5)}
+.miller-range span{color:#a78bfa;font-weight:600}
+
+/* ===== 霓虹效果 ===== */
+.neon-showcase{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;padding:20px}
+.neon-sample{padding:12px 24px;border-radius:10px;font-size:14px;font-weight:700;letter-spacing:2px;text-align:center;position:relative}
+.neon-sample.pink{color:#FF00FF;text-shadow:0 0 10px #FF00FF,0 0 20px #FF00FF,0 0 40px rgba(255,0,255,.4);border:1px solid rgba(255,0,255,.4)}
+.neon-sample.cyan{color:#00FFFF;text-shadow:0 0 10px #00FFFF,0 0 20px #00FFFF,0 0 40px rgba(0,255,255,.4);border:1px solid rgba(0,255,255,.4)}
+.neon-sample.yellow{color:#FFFF00;text-shadow:0 0 10px #FFFF00,0 0 20px #FFFF00,0 0 40px rgba(255,255,0,.4);border:1px solid rgba(255,255,0,.4)}
+.neon-sample.orange{color:#FF6600;text-shadow:0 0 10px #FF6600,0 0 20px #FF6600,0 0 40px rgba(255,102,0,.4);border:1px solid rgba(255,102,0,.4)}
+.neon-sample.green{color:#39FF14;text-shadow:0 0 10px #39FF14,0 0 20px #39FF14,0 0 40px rgba(57,255,20,.4);border:1px solid rgba(57,255,20,.4)}
+
+/* ===== 案例分析 ===== */
+.case-card{margin:20px 0;padding:24px;background:rgba(30,30,50,.5);border:1px solid rgba(139,92,246,.15);border-radius:14px}
+.case-card h4{font-size:16px;color:#a78bfa;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.case-card .version{font-size:12px;padding:3px 10px;border-radius:8px;font-weight:600}
+.case-card .version.v1{background:rgba(239,68,68,.15);color:#f87171}
+.case-card .version.v2{background:rgba(245,158,11,.15);color:#fbbf24}
+.case-card .version.v3{background:rgba(59,130,246,.15);color:#60a5fa}
+.case-card .issue{font-size:13px;color:rgba(224,224,224,.65);margin-bottom:8px}
+.case-card .solution{font-size:13px;color:rgba(16,185,129,.7);padding-left:14px;border-left:2px solid rgba(16,185,129,.3)}
+
+/* ===== 风格术语 ===== */
+.style-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:16px 0}
+.style-card{border-radius:14px;padding:24px;position:relative;overflow:hidden;min-height:140px;transition:transform .3s}
+.style-card:hover{transform:translateY(-3px)}
+.style-card h5{font-size:16px;font-weight:700;margin-bottom:8px}
+.style-card p{font-size:13px;line-height:1.7;opacity:.85}
+.style-card.cyber{background:linear-gradient(135deg,#0a0a1a,#1a0a2e);border:1px solid rgba(0,255,255,.2);color:#e0e0e0}
+.style-card.cyber h5{color:#00FFFF;text-shadow:0 0 8px rgba(0,255,255,.4)}
+.style-card.anime{background:linear-gradient(135deg,#f0e6ff,#e6f0ff);border:1px solid rgba(168,85,247,.2);color:#4a3670}
+.style-card.anime h5{color:#7c3aed}
+.style-card.minimal{background:linear-gradient(135deg,#f5f5f5,#fafafa);border:1px solid #e0e0e0;color:#333}
+.style-card.minimal h5{color:#111}
+.style-card.chinese{background:linear-gradient(135deg,#f5f0e8,#efe8d8);border:1px solid rgba(180,120,60,.2);color:#5a3e28}
+.style-card.chinese h5{color:#8b4513}
+.style-card.pixel{background:linear-gradient(135deg,#1a1a2e,#16213e);border:1px solid rgba(99,102,241,.2);color:#e0e0e0;image-rendering:pixelated}
+.style-card.pixel h5{color:#818cf8}
+
+/* ===== 底部 ===== */
+.footer{margin-top:80px;padding:40px;text-align:center;border-top:1px solid rgba(139,92,246,.15)}
+.footer p{font-size:13px;color:rgba(168,162,186,.4)}
+.footer .note{margin-top:12px;font-size:12px;color:rgba(168,162,186,.3);font-style:italic}
+
+/* ===== 侧边导航 ===== */
+.sidebar{position:fixed;top:0;left:0;width:240px;height:100vh;background:rgba(10,10,20,.95);backdrop-filter:blur(12px);border-right:1px solid rgba(139,92,246,.15);z-index:1000;transform:translateX(-240px);transition:transform .3s ease;overflow-y:auto;padding:20px 0}
+.sidebar.open{transform:translateX(0)}
+.sidebar .toc-title{padding:16px 20px 12px;font-size:13px;color:rgba(139,92,246,.6);letter-spacing:3px;font-weight:600;text-transform:uppercase}
+.sidebar a{display:block;padding:8px 20px;font-size:13px;color:rgba(196,181,253,.6);text-decoration:none;transition:all .2s;border-left:3px solid transparent}
+.sidebar a:hover{color:#c4b5fd;background:rgba(139,92,246,.08);border-left-color:rgba(139,92,246,.3)}
+.sidebar a.active{color:#a78bfa;background:rgba(139,92,246,.12);border-left-color:#8b5cf6;font-weight:600}
+.sidebar a.sub{padding-left:36px;font-size:12px;color:rgba(168,162,186,.45)}
+.sidebar a.sub:hover{color:rgba(196,181,253,.7)}
+.hamburger{position:fixed;top:20px;left:20px;z-index:1001;width:40px;height:40px;border-radius:10px;background:rgba(30,30,50,.9);backdrop-filter:blur(8px);border:1px solid rgba(139,92,246,.25);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;transition:all .3s}
+.hamburger:hover{border-color:rgba(139,92,246,.5);background:rgba(40,40,60,.95)}
+.hamburger span{display:block;width:18px;height:2px;background:#a78bfa;border-radius:1px;transition:all .3s}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.hamburger.active span:nth-child(2){opacity:0}
+.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:999;opacity:0;pointer-events:none;transition:opacity .3s}
+.overlay.show{opacity:1;pointer-events:auto}
+
+@media(min-width:1100px){
+  .sidebar{transform:translateX(0)}
+  body.sb-open{margin-left:240px}
+  .hamburger{display:none}
+  .overlay{display:none}
+}
+</style>
+</head>
+<body class="sb-open">
+
+<!-- 侧边导航 -->
+<div class="hamburger" onclick="toggleSidebar()">
+  <span></span><span></span><span></span>
+</div>
+<div class="overlay" onclick="toggleSidebar()"></div>
+<nav class="sidebar open" id="sidebar">
+  <div class="toc-title">📑 目录导航</div>
+  <a href="#cover" class="active">封面</a>
+  <a href="#ch1">一、核心设计原则</a>
+  <a href="#s1-1" class="sub">尼尔森十大可用性原则</a>
+  <a href="#s1-2" class="sub">格式塔设计原则</a>
+  <a href="#s1-3" class="sub">视觉设计5大原则</a>
+  <a href="#s1-4" class="sub">米勒定律</a>
+  <a href="#s1-5" class="sub">霓虹效果原则</a>
+  <a href="#ch2">二、核心专业术语</a>
+  <a href="#s2-1" class="sub">可用性术语</a>
+  <a href="#s2-2" class="sub">视觉设计术语</a>
+  <a href="#s2-3" class="sub">交互设计术语</a>
+  <a href="#s2-4" class="sub">风格相关术语</a>
+  <a href="#ch3">三、应用说明</a>
+  <a href="#ch4">四、补充说明</a>
+</nav>
+
+<!-- 封面 -->
+<section class="cover" id="cover">
+  <div class="cover-grid"></div>
+  <div class="cover-content">
+    <h1>常用UI设计原则<br>与核心术语</h1>
+    <p class="subtitle">UI DESIGN PRINCIPLES & TERMINOLOGY</p>
+    <div class="tags">
+      <span class="tag">尼尔森原则</span>
+      <span class="tag">格式塔</span>
+      <span class="tag">视觉设计</span>
+      <span class="tag">交互设计</span>
+      <span class="tag">风格术语</span>
+    </div>
+  </div>
+  <div class="scroll-hint">↓ 向下滚动开始学习</div>
+</section>
+
+<div class="main">
+
+<!-- 前言 -->
+<div class="preface" id="preface">
+  <p>本文档整合了UI设计（含游戏UI、APP UI）核心原则、专业术语，结合前期直播APP界面分析案例中涉及的知识点，按逻辑分类整理，便于学习、查阅和应用。适配UI设计初学者的学习记录与实战参考需求。</p>
+</div>
+
+<!-- ===================== 第一章：核心设计原则 ===================== -->
+<div class="chapter" id="ch1">
+  <div class="chapter-title">
+    <div class="chapter-num c1">一</div>
+    <h2>核心设计原则（重点必记）</h2>
+  </div>
+
+  <!-- 尼尔森十大 -->
+  <div class="section" id="s1-1">
+    <div class="section-head">
+      <div class="section-icon" style="background:linear-gradient(135deg,#6366f1,#818cf8)">🎯</div>
+      <h3>尼尔森十大可用性原则</h3>
+    </div>
+    <div class="section-desc">
+      <strong>核心目标：</strong>提升界面可用性、降低用户学习成本、减少操作失误，适配各类UI场景（APP、游戏、网页等）。
+    </div>
+
+    <!-- 总览示意图 -->
+    <div class="demo-box">
+      <div class="demo-title">十大原则总览</div>
+      <div class="nielsen-visual">
+        <div class="nv-item"><span class="nv-icon">👁️</span>状态可见</div>
+        <div class="nv-item"><span class="nv-icon">🌍</span>环境贴切</div>
+        <div class="nv-item"><span class="nv-icon">🎮</span>用户可控</div>
+        <div class="nv-item"><span class="nv-icon">🔗</span>一致性</div>
+        <div class="nv-item"><span class="nv-icon">🛡️</span>防错</div>
+        <div class="nv-item"><span class="nv-icon">📌</span>易取</div>
+        <div class="nv-item"><span class="nv-icon">⚡</span>灵活高效</div>
+        <div class="nv-item"><span class="nv-icon">✨</span>简约美观</div>
+        <div class="nv-item"><span class="nv-icon">🔧</span>容错帮助</div>
+        <div class="nv-item"><span class="nv-icon">💡</span>人性化</div>
+      </div>
+    </div>
+
+    <!-- 10条原则卡片 -->
+    <div class="principle-grid">
+      <div class="principle p1">
+        <span class="num">01</span>
+        <h4>👁️ 状态可见性原则</h4>
+        <p class="def">用户操作后，界面需及时给出清晰反馈，让用户知晓当前操作结果、界面状态（如加载提示、按钮点击反馈）。</p>
+        <p class="app">📱 直播APP中礼物发送后的弹窗提示、分类栏选中态高亮。</p>
+      </div>
+      <div class="principle p2">
+        <span class="num">02</span>
+        <h4>🌍 环境贴切原则</h4>
+        <p class="def">界面设计需贴合产品定位和用户使用场景，语言、元素、交互逻辑符合用户习惯，避免陌生化设计。</p>
+        <p class="app">📱 直播APP核心内容为直播卡片，避免冗余元素干扰；游戏UI需贴合游戏风格（赛博朋克、国风）。</p>
+      </div>
+      <div class="principle p3">
+        <span class="num">03</span>
+        <h4>🎮 用户可控原则</h4>
+        <p class="def">用户可自主控制界面操作，可撤销、关闭、跳过不必要的内容，避免强制操作。</p>
+        <p class="app">📱 直播APP中流动弹幕可手动关闭、广告可跳过；游戏UI中设置界面可自由切换选项。</p>
+      </div>
+      <div class="principle p4">
+        <span class="num">04</span>
+        <h4>🔗 一致性原则</h4>
+        <p class="def">全界面的视觉样式、交互逻辑、术语表述保持统一，建立稳定的用户心理模型，降低学习成本。</p>
+        <p class="app">📱 直播APP中所有直播卡片样式统一、同类型模块（群聊派对、热门直播）交互一致（均添加"更多"按钮）。</p>
+      </div>
+      <div class="principle p5">
+        <span class="num">05</span>
+        <h4>🛡️ 防错原则</h4>
+        <p class="def">通过设计避免用户误操作，对易误触的元素（如广告、删除按钮）进行优化，或添加确认提示。</p>
+        <p class="app">📱 直播APP中广告位不插入内容流，避免误点；删除操作需弹出确认弹窗。</p>
+      </div>
+      <div class="principle p6">
+        <span class="num">06</span>
+        <h4>📌 易取原则（识别优于回忆）</h4>
+        <p class="def">常用功能、核心内容需前置，用户无需记忆位置，可直接识别并获取，减少认知负担。</p>
+        <p class="app">📱 直播APP中常用分类前置、热门直播推荐位放在首页顶部。</p>
+      </div>
+      <div class="principle p7">
+        <span class="num">07</span>
+        <h4>⚡ 灵活高效原则</h4>
+        <p class="def">界面需兼顾新手和老手用户，提供便捷操作方式，支持快速完成核心任务，具备一定扩展性。</p>
+        <p class="app">📱 直播APP分类栏支持常用分类固定、更多分类收起，兼顾便捷性和扩展性。</p>
+      </div>
+      <div class="principle p8">
+        <span class="num">08</span>
+        <h4>✨ 简约美观原则</h4>
+        <p class="def">界面元素简洁，避免冗余，视觉层级清晰，兼顾美观性和实用性，不干扰核心操作。</p>
+        <p class="app">📱 直播APP顶部分类栏尺寸优化，减少占用空间；避免高饱和元素抢夺核心内容注意力。</p>
+      </div>
+      <div class="principle p9">
+        <span class="num">09</span>
+        <h4>🔧 容错帮助原则</h4>
+        <p class="def">当用户操作失误时，提供清晰的错误提示和解决方法，帮助用户快速修正，无需重新操作。</p>
+        <p class="app">📱 登录失败时提示"账号或密码错误"，并提供"忘记密码"入口。</p>
+      </div>
+      <div class="principle p10">
+        <span class="num">10</span>
+        <h4>💡 人性化帮助原则</h4>
+        <p class="def">提供简洁易懂的帮助信息，无需用户查找复杂说明，即可掌握界面操作方法。</p>
+        <p class="app">📱 新手引导弹窗、功能按钮hover提示、界面角落帮助入口。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 格式塔原则 -->
+  <div class="section" id="s1-2">
+    <div class="section-head">
+      <div class="section-icon" style="background:linear-gradient(135deg,#3b82f6,#06b6d4)">👁</div>
+      <h3>格式塔设计原则（视觉组织核心）</h3>
+    </div>
+    <div class="section-desc">
+      <strong>核心目标：</strong>解释人类视觉如何组织和感知界面元素，帮助设计出视觉清晰、逻辑连贯的界面，让用户快速归类信息。
+    </div>
+
+    <!-- 格式塔可视化示意 -->
+    <div class="demo-box">
+      <div class="demo-title">格式塔原则可视化演示</div>
+      <div class="gestalt-demos">
+        <div class="g-demo">
+          <div class="g-visual">
+            <div class="prox-group"><div class="prox-dot"></div><div class="prox-dot"></div><div class="prox-dot"></div></div>
+            <div class="prox-gap"></div>
+            <div class="prox-group"><div class="prox-dot"></div><div class="prox-dot"></div><div class="prox-dot"></div></div>
+          </div>
+          <div class="g-label">接近性</div>
+        </div>
+        <div class="g-demo">
+          <div class="g-visual">
+            <div class="sim-row">
+              <div class="sim-circle"></div><div class="sim-circle"></div><div class="sim-square"></div><div class="sim-square"></div><div class="sim-circle"></div><div class="sim-circle"></div>
+            </div>
+          </div>
+          <div class="g-label">相似性</div>
+        </div>
+        <div class="g-demo">
+          <div class="g-visual" style="flex-direction:column;gap:4px">
+            <div class="cont-line"></div>
+            <div class="cont-dots"><div class="cont-dot"></div><div class="cont-dot"></div><div class="cont-dot"></div><div class="cont-dot"></div><div class="cont-dot"></div></div>
+          </div>
+          <div class="g-label">连续性</div>
+        </div>
+        <div class="g-demo">
+          <div class="g-visual">
+            <div class="closure-shape"></div>
+          </div>
+          <div class="g-label">闭合性</div>
+        </div>
+        <div class="g-demo">
+          <div class="g-visual">
+            <div class="sym-box">
+              <div class="sym-half l"></div>
+              <div class="sym-line"></div>
+              <div class="sym-half r"></div>
+            </div>
+          </div>
+          <div class="g-label">对称性</div>
+        </div>
+        <div class="g-demo">
+          <div class="g-visual">
+            <div class="fg-bg"><div class="fg-rect"></div></div>
+          </div>
+          <div class="g-label">主体/背景</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="principle-grid">
+      <div class="principle p1">
+        <span class="num">01</span>
+        <h4>📐 接近性原则</h4>
+        <p class="def">视觉上距离相近的元素，会被用户感知为一组，无需额外分隔。</p>
+        <p class="app">📱 直播APP中同类型直播卡片上下堆叠、左右对齐，用户自动识别为一组内容。</p>
+      </div>
+      <div class="principle p2">
+        <span class="num">02</span>
+        <h4>🔵 相似性原则</h4>
+        <p class="def">视觉样式（颜色、形状、尺寸、纹理）相似的元素，会被用户感知为一组，增强界面一致性。</p>
+        <p class="app">📱 直播APP中所有分类图标样式、尺寸统一；所有直播卡片结构、边框样式一致。</p>
+      </div>
+      <div class="principle p3">
+        <span class="num">03</span>
+        <h4>➡️ 连续性原则</h4>
+        <p class="def">用户视觉会自然跟随连续的线条、元素排布，优先感知连贯的整体，而非零散的个体。</p>
+        <p class="app">📱 直播APP分类栏横向排布、内容流垂直滚动，引导用户有序浏览。</p>
+      </div>
+      <div class="principle p4">
+        <span class="num">04</span>
+        <h4>⭕ 闭合性原则</h4>
+        <p class="def">用户会自动将不完整的元素补全为完整的整体，可利用这一原则简化设计，减少冗余元素。</p>
+        <p class="app">📱 直播APP按钮采用圆角矩形，即使无完整边框，用户也能识别为按钮。</p>
+      </div>
+      <div class="principle p5">
+        <span class="num">05</span>
+        <h4>⚖️ 对称性原则</h4>
+        <p class="def">对称的元素会给用户带来稳定、平衡的视觉感受，提升界面美观度和舒适度。</p>
+        <p class="app">📱 直播APP首页布局左右对称；游戏UI中主菜单布局对称，增强稳重感。</p>
+      </div>
+      <div class="principle p6">
+        <span class="num">06</span>
+        <h4>🖼️ 主体/背景原则</h4>
+        <p class="def">用户会自动区分界面中的"主体"（核心内容）和"背景"（辅助元素），需明确主次，避免混淆。</p>
+        <p class="app">📱 直播APP中直播卡片为主体，背景为浅色系或纯色；顶部导航栏为背景，核心内容区为主体。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 视觉设计5大原则 -->
+  <div class="section" id="s1-3">
+    <div class="section-head">
+      <div class="section-icon" style="background:linear-gradient(135deg,#8b5cf6,#ec4899)">🎨</div>
+      <h3>视觉设计5大基础原则</h3>
+    </div>
+    <div class="section-desc">
+      <strong>核心目标：</strong>优化界面视觉呈现，提升美观度、可读性和易用性，让界面既好看又好用。
+    </div>
+
+    <!-- 5原则可视化 -->
+    <div class="demo-box">
+      <div class="demo-title">五大原则可视化演示</div>
+      <div class="vis5-demos">
+        <div class="v5-demo">
+          <div class="v5-visual">
+            <div class="align-lines" style="position:relative;width:60px">
+              <div style="width:50px;height:6px;border-radius:3px;background:#6366f1"></div>
+              <div style="width:35px;height:6px;border-radius:3px;background:#818cf8"></div>
+              <div style="width:45px;height:6px;border-radius:3px;background:#a78bfa"></div>
+              <div style="width:28px;height:6px;border-radius:3px;background:#c4b5fd"></div>
+              <div style="position:absolute;left:0;top:-4px;width:1px;height:calc(100% + 8px);background:rgba(239,68,68,.5)"></div>
+            </div>
+          </div>
+          <div class="v5-label">对齐</div>
+        </div>
+        <div class="v5-demo">
+          <div class="v5-visual">
+            <div class="spacing-boxes">
+              <div class="sp-box"></div>
+              <span class="sp-arrow">↔</span>
+              <div class="sp-box"></div>
+              <span class="sp-arrow">↔</span>
+              <div class="sp-box"></div>
+            </div>
+          </div>
+          <div class="v5-label">间距</div>
+        </div>
+        <div class="v5-demo">
+          <div class="v5-visual">
+            <div class="contrast-pair">
+              <div class="ctr-big">A</div>
+              <div class="ctr-small">a</div>
+            </div>
+          </div>
+          <div class="v5-label">对比</div>
+        </div>
+        <div class="v5-demo">
+          <div class="v5-visual">
+            <div class="repeat-row">
+              <div class="rpt-item"></div><div class="rpt-item"></div><div class="rpt-item"></div><div class="rpt-item"></div>
+            </div>
+          </div>
+          <div class="v5-label">重复</div>
+        </div>
+        <div class="v5-demo">
+          <div class="v5-visual">
+            <div class="whitespace-demo">
+              <div class="ws-content"></div>
+              <div class="ws-space"></div>
+              <div class="ws-content"></div>
+            </div>
+          </div>
+          <div class="v5-label">留白</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="principle-grid">
+      <div class="principle p1">
+        <span class="num">01</span>
+        <h4>📏 对齐原则</h4>
+        <p class="def">所有界面元素（文字、图标、卡片、按钮）需按统一基准对齐（左对齐、右对齐、居中对齐），避免杂乱。</p>
+        <p class="app">📱 直播APP中所有直播卡片左对齐、文字左对齐；分类图标居中对齐。</p>
+      </div>
+      <div class="principle p2">
+        <span class="num">02</span>
+        <h4>↔️ 间距原则</h4>
+        <p class="def">元素之间的间距需统一、合理，区分不同模块，提升界面呼吸感，避免拥挤或松散。</p>
+        <p class="app">📱 直播APP中直播卡片之间的间距一致；文字与图标、按钮与边框的间距统一。</p>
+      </div>
+      <div class="principle p3">
+        <span class="num">03</span>
+        <h4>🔲 对比原则</h4>
+        <p class="def">通过颜色、尺寸、粗细、明暗的对比，突出核心元素、区分不同模块，引导用户注意力。</p>
+        <p class="app">📱 直播APP中选中的分类用高亮色对比；主标题字体加粗、尺寸放大，与副标题对比。</p>
+      </div>
+      <div class="principle p4">
+        <span class="num">04</span>
+        <h4>🔁 重复原则</h4>
+        <p class="def">将界面中的核心元素（如颜色、图标样式、边框、字体）重复使用，增强界面一致性和识别度。</p>
+        <p class="app">📱 直播APP中所有按钮采用相同的圆角、颜色；所有标题采用相同的字体和粗细。</p>
+      </div>
+      <div class="principle p5">
+        <span class="num">05</span>
+        <h4>🫧 留白原则</h4>
+        <p class="def">界面中保留一定的空白区域，不堆砌元素，提升视觉舒适度，突出核心内容。</p>
+        <p class="app">📱 直播APP顶部导航栏与内容区之间留白；直播卡片内部文字与边框之间留白。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 米勒定律 -->
+  <div class="section" id="s1-4">
+    <div class="section-head">
+      <div class="section-icon" style="background:linear-gradient(135deg,#10b981,#34d399)">🧠</div>
+      <h3>米勒定律（7±2 原则）</h3>
+    </div>
+    <div class="section-desc">
+      <strong>交互设计辅助准则：</strong>人类短时记忆容量为 5-9 个元素，界面中的分类、选项、按钮数量不宜超过7个。
+    </div>
+
+    <div class="demo-box">
+      <div class="demo-title">短时记忆容量可视化</div>
+      <div class="miller-visual">
+        <div class="miller-slot" style="background:rgba(99,102,241,.15);color:rgba(99,102,241,.3)">1</div>
+        <div class="miller-slot" style="background:rgba(99,102,241,.2);color:rgba(99,102,241,.4)">2</div>
+        <div class="miller-slot" style="background:rgba(99,102,241,.25);color:rgba(99,102,241,.5)">3</div>
+        <div class="miller-slot" style="background:rgba(99,102,241,.3);color:rgba(99,102,241,.6)">4</div>
+        <div class="miller-slot active" style="background:rgba(99,102,241,.4);color:rgba(99,102,241,.8)">5</div>
+        <div class="miller-slot active" style="background:linear-gradient(135deg,#6366f1,#818cf8);color:#fff">6</div>
+        <div class="miller-slot active" style="background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;box-shadow:0 0 25px rgba(99,102,241,.5)">7</div>
+        <div class="miller-slot active" style="background:linear-gradient(135deg,#8b5cf6,#a855f7);color:#fff">8</div>
+        <div class="miller-slot active" style="background:rgba(139,92,246,.4);color:rgba(167,139,250,.8)">9</div>
+      </div>
+      <div class="miller-range">人类短时记忆容量：<span>5 ~ 9</span> 个元素（最佳 <span>7±2</span>）</div>
+    </div>
+
+    <div class="principle p7">
+      <span class="num">7±2</span>
+      <h4>🧠 米勒定律</h4>
+      <p class="def">人类短时记忆容量为5-9个元素，界面中的分类、选项、按钮数量不宜超过7个，避免超出用户记忆负荷，降低学习成本。</p>
+      <p class="app">📱 直播APP底部导航分类设置5个；顶部分类栏固定常用分类不超过7个，剩余分类收起；游戏UI中菜单选项控制在5-7个。</p>
+    </div>
+  </div>
+
+  <!-- 霓虹效果 -->
+  <div class="section" id="s1-5">
+    <div class="section-head">
+      <div class="section-icon" style="background:linear-gradient(135deg,#ec4899,#f472b6)">💜</div>
+      <h3>霓虹效果设计原则（适配游戏UI）</h3>
+    </div>
+
+    <div class="demo-box">
+      <div class="demo-title">霓虹效果色彩展示</div>
+      <div class="neon-showcase">
+        <div class="neon-sample pink">霓虹粉</div>
+        <div class="neon-sample cyan">电光青</div>
+        <div class="neon-sample yellow">霓虹黄</div>
+        <div class="neon-sample orange">霓虹橙</div>
+        <div class="neon-sample green">霓虹绿</div>
+      </div>
+    </div>
+
+    <div class="principle-grid">
+      <div class="principle p5">
+        <span class="num">✦</span>
+        <h4>💡 核心定义</h4>
+        <p class="def">霓虹（Neon）是模拟霓虹灯/荧光灯管的发光视觉效果，核心是"高饱和、高亮度、边缘发光、通透感"，而非固定颜色。</p>
+      </div>
+      <div class="principle p3">
+        <span class="num">✦</span>
+        <h4>🔍 关键特征（判断标准）</h4>
+        <p class="def">
+          <strong>发光感：</strong>有明显的外发光/辉光效果，模拟灯管通电状态<br>
+          <strong>高饱和：</strong>颜色鲜艳、饱和度高，在背景上突出<br>
+          <strong>通透感：</strong>半透明、灯管式线条/色块，非实色块<br>
+          <strong>线条感：</strong>多以细线条、边框、描边形式出现
+        </p>
+      </div>
+      <div class="principle p8">
+        <span class="num">✦</span>
+        <h4>🎨 常用颜色</h4>
+        <p class="def">
+          霓虹粉（<span style="color:#FF00FF;font-weight:700">#FF00FF</span>）、
+          电光青/霓虹蓝（<span style="color:#00FFFF;font-weight:700">#00FFFF</span>）、
+          霓虹黄（<span style="color:#FFFF00;font-weight:700">#FFFF00</span>）、
+          霓虹橙（<span style="color:#FF6600;font-weight:700">#FF6600</span>）、
+          霓虹绿（<span style="color:#39FF14;font-weight:700">#39FF14</span>）<br>
+          其中<strong>粉、蓝最具标志性</strong>。
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== 第二章：核心专业术语 ===================== -->
+<div class="chapter" id="ch2">
+  <div class="chapter-title">
+    <div class="chapter-num c2">二</div>
+    <h2>核心专业术语</h2>
+  </div>
+
+  <!-- 可用性术语 -->
+  <div class="section" id="s2-1">
+    <div class="section-head">
+      <div class="section-icon" style="background:linear-gradient(135deg,#6366f1,#818cf8)">📋</div>
+      <h3>可用性术语</h3>
+    </div>
+    <div class="term-group">
+      <div class="term">
+        <div class="t-num tc1">1</div>
+        <div class="t-body">
+          <div class="t-name">可用性</div>
+          <div class="t-def">界面被用户快速学会、高效使用、少出错、满意度高的程度，是尼尔森原则的核心目标。</div>
+        </div>
+      </div>
+      <div class="term">
+        <div class="t-num tc1">2</div>
+        <div class="t-body">
+          <div class="t-name">认知负担</div>
+          <div class="t-def">用户理解、记忆、操作界面时需要付出的脑力成本，易取原则、米勒定律均为降低认知负担。</div>
+        </div>
+      </div>
+      <div class="term">
+        <div class="t-num tc1">3</div>
+        <div class="t-body">
+          <div class="t-name">心理模型</div>
+          <div class="t-def">用户基于过往经验对界面操作的预期，一致性原则可建立稳定的用户心理模型。</div>
+        </div>
+      </div>
+      <div class="term">
+        <div class="t-num tc1">4</div>
+        <div class="t-body">
+          <div class="t-name">核心任务</div>
+          <div class="t-def">用户使用产品的主要目的（如直播APP的"找直播、看直播"），所有设计需服务于核心任务。</div>
+        </div>
+      </div>
+      <div class="term">
+        <div class="t-num tc1">5</div>
+        <div class="t-body">
+          <div class="t-name">操作负担</div>
+          <div class="t-def">用户完成某一任务需要的步骤、操作次数，灵活高效原则可降低操作负担。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 视觉设计术语 -->
+  <div class="section" id="s2-2">
+    <div class="section-head">
+      <div class="section-icon" style="background:linear-gradient(135deg,#3b82f6,#06b6d4)">🎨</div>
+      <h3>视觉设计术语</h3>
+    </div>
+    <div class="term-group">
+      <div class="term">
+        <div class="t-num tc2">1</div>
+        <div class="t-body">
+          <div class="t-name">视觉层级</div>
+          <div class="t-def">界面元素的视觉权重排序，核心内容视觉权重高（大尺寸、高饱和、突出位置），辅助元素权重低，确保用户优先看到核心内容。</div>
+        </div>
+      </div>
+      <div class="term">
+        <div class="t-num tc2">2</div>
+        <div class="t-body">
+          <div class="t-name">高饱和 / 低饱和</div>
+          <div class="t-def">颜色的鲜艳程度，高饱和颜色视觉冲击力强（适合强调元素），低饱和颜色更柔和（适合背景、辅助元素）。</div>
+        </div>
+      </div>
+      <div class="term">
+        <div class="t-num tc2">3</div>
+        <div class="t-body">
+          <div class="t-name">外发光 / 辉光</div>
+          <div class="t-def">元素边缘向外扩散的发光效果，是霓虹效果的核心特征。</div>
+        </div>
+      </div>
+      <div class="term">
+        <div class="t-num tc2">4</div>
+        <div class="t-body">
+          <div class="t-name">留白</div>
+          <div class="t-def">界面中未放置任何元素的空白区域，分为内留白（元素内部）和外留白（元素之间）。</div>
+        </div>
+      </div>
+      <div class="term">
+        <div class="t-num tc2">5</div>
+        <div class="t-body">
+          <div class="t-name">选中态</div>
+          <div class="t-def">元素被用户选中后的视觉状态（如高亮、下划线、色块），用于反馈用户操作，提升状态可见性。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 交互设计术语 -->
+  <div class="section" id="s2-3">
+    <div class="section-head">
+      <div class="section-icon" style="background:linear-gradient(135deg,#8b5cf6,#ec4899)">🖱️</div>
+      <h3>交互设计术语</h3>
+    </div>
+    <div class="term-group">
+      <div class="term">
+        <div class="t-num tc3">1</div>
+        <div class="t-body">
+          <div class="t-name">反馈</div>
+          <div class="t-def">界面对用户操作的回应（如按钮点击变色、加载动画、提示弹窗），体现状态可见性原则。</div>
+        </div>
+      </div>
+      <div class="term">
+        <div class="t-num tc3">2</div>
+        <div class="t-body">
+          <div class="t-name">跳转</div>
+          <div class="t-def">用户点击元素后进入另一页面/模块的操作，需符合用户预期，避免突然跳转。</div>
+        </div>
+      </div>
+      <div class="term">
+        <div class="t-num tc3">3</div>
+        <div class="t-body">
+          <div class="t-name">悬浮提示</div>
+          <div class="t-def">用户将鼠标/手指悬停在元素上时出现的提示信息，用于补充说明，体现人性化帮助原则。</div>
+        </div>
+      </div>
+      <div class="term">
+        <div class="t-num tc3">4</div>
+        <div class="t-body">
+          <div class="t-name">下拉收起</div>
+          <div class="t-def">将多余的分类、内容折叠，点击下拉按钮可展开，兼顾扩展性和简约美观。</div>
+        </div>
+      </div>
+      <div class="term">
+        <div class="t-num tc3">5</div>
+        <div class="t-body">
+          <div class="t-name">弹窗</div>
+          <div class="t-def">在当前界面弹出的小窗口，用于提示、确认、展示临时内容，不干扰核心界面。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 风格相关术语 -->
+  <div class="section" id="s2-4">
+    <div class="section-head">
+      <div class="section-icon" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">🎭</div>
+      <h3>风格相关术语（适配游戏UI、APP UI）</h3>
+    </div>
+
+    <div style="margin-bottom:16px;padding:14px 20px;background:linear-gradient(135deg,rgba(139,92,246,.12),rgba(236,72,153,.08));border:1px solid rgba(139,92,246,.25);border-radius:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+      <span style="font-size:14px;color:rgba(196,181,253,.8)">📸 想看真实游戏UI截图？点击查看完整风格展示 →</span>
+      <a href="../UI风格展示/UI风格展示.html" style="padding:8px 20px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;transition:all .2s" onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 4px 15px rgba(99,102,241,.4)'" onmouseout="this.style.transform='';this.style.boxShadow=''">打开风格展示页</a>
+    </div>
+
+    <div class="style-grid">
+      <div class="style-card cyber">
+        <h5>🌃 赛博朋克风格</h5>
+        <p>以"高科技、低生活、暗网感、未来都市"为核心主题，常用黑底+霓虹发光元素（粉、蓝、青），搭配科技网格、故障效果、HUD面板。</p>
+      </div>
+      <div class="style-card anime">
+        <h5>🌸 二次元科幻风格</h5>
+        <p>以二次元立绘为核心元素，背景多为浅色系渐变，界面通透、精致，按钮多为圆角、磨砂玻璃效果。</p>
+      </div>
+      <div class="style-card minimal">
+        <h5>◻️ 极简/扁平风</h5>
+        <p>元素简洁，无多余装饰，以黑白灰+单一主色为主，留白充足，侧重实用性。</p>
+      </div>
+      <div class="style-card chinese">
+        <h5>🏯 国风/古风</h5>
+        <p>以传统元素（毛笔字、水墨、祥云、印章）为核心，颜色多为墨黑、米白、朱砂、石青，质感偏宣纸、木纹。</p>
+      </div>
+      <div class="style-card pixel">
+        <h5>👾 像素风</h5>
+        <p>以8bit/16bit像素为核心视觉，画面呈马赛克状，颜色复古、简洁，适配复古游戏UI。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== 第三章：应用说明 ===================== -->
+<div class="chapter" id="ch3">
+  <div class="chapter-title">
+    <div class="chapter-num c3">三</div>
+    <h2>原则与术语应用说明</h2>
+  </div>
+
+  <div class="section-desc" style="margin-bottom:20px">
+    <strong>结合前期直播APP界面分析案例：</strong>
+  </div>
+
+  <div class="case-card">
+    <h4><span class="version v1">1.0</span> 版本问题分析</h4>
+    <p class="issue">违反<strong>"对比原则""易取原则"</strong>，核心问题是视觉焦点错位、分类单一。</p>
+    <p class="solution">✅ 可通过优化视觉层级、补充分类入口解决。</p>
+  </div>
+  <div class="case-card">
+    <h4><span class="version v2">2.0</span> 版本问题分析</h4>
+    <p class="issue">违反<strong>"一致性原则""米勒定律"</strong>，核心问题是同模块交互不一致、分类栏滑动操作负担大。</p>
+    <p class="solution">✅ 可通过统一交互、优化分类栏设计解决。</p>
+  </div>
+  <div class="case-card">
+    <h4><span class="version v3">3.0</span> 版本问题分析</h4>
+    <p class="issue">违反<strong>"用户可控原则""对比原则"</strong>，核心问题是弹幕遮挡内容、分类栏选中态不明显。</p>
+    <p class="solution">✅ 可通过优化弹幕样式、强化选中态解决。</p>
+  </div>
+
+  <div class="principle p7" style="margin-top:20px">
+    <h4>💡 核心原则</h4>
+    <p class="def">所有界面设计均需兼顾<strong>"可用性"和"美观性"</strong>，优先满足核心任务，再优化视觉呈现，避免为了美观牺牲可用性。</p>
+  </div>
+</div>
+
+<!-- ===================== 第四章：补充说明 ===================== -->
+<div class="chapter" id="ch4">
+  <div class="chapter-title">
+    <div class="chapter-num c4">四</div>
+    <h2>补充说明</h2>
+  </div>
+
+  <div class="principle-grid">
+    <div class="principle p6">
+      <h4>📥 文档可下载适配</h4>
+      <p class="def">本文档可直接复制到WPS、Word、Notion、语雀等任意文档工具中，保存为PDF、Word格式，便于下载、打印、编辑。</p>
+    </div>
+    <div class="principle p7">
+      <h4>📝 后续扩展</h4>
+      <p class="def">后续新增原则、术语或应用案例，可在对应分类下补充，保持文档完整性。</p>
+    </div>
+    <div class="principle p1">
+      <h4>🎯 学习建议</h4>
+      <p class="def">术语和原则可结合具体界面案例（如前期直播APP、游戏UI）理解，重点掌握<strong>"尼尔森原则""格式塔原则"</strong>，可直接用于界面评价和设计优化。</p>
+    </div>
+  </div>
+</div>
+
+<!-- 底部 -->
+<div class="footer">
+  <p>常用UI设计原则与核心术语 · 学习参考文档</p>
+  <p class="note">注：文档部分内容可能由 AI 生成</p>
+</div>
+
+</div><!-- /main -->
+
+<script>
+// 侧边栏切换
+function toggleSidebar(){
+  const sb=document.getElementById('sidebar');
+  const hb=document.querySelector('.hamburger');
+  const ol=document.querySelector('.overlay');
+  const open=sb.classList.toggle('open');
+  hb.classList.toggle('active',open);
+  ol.classList.toggle('show',open);
+  if(window.innerWidth>=1100)document.body.classList.toggle('sb-open',open);
+}
+
+// 滚动高亮导航
+const tocLinks=document.querySelectorAll('.sidebar a');
+const sections=[];
+tocLinks.forEach(a=>{
+  const id=a.getAttribute('href');
+  if(id&&id.startsWith('#')){
+    const el=document.querySelector(id);
+    if(el)sections.push({el,link:a});
+  }
+});
+function updateActive(){
+  let current=sections[0];
+  const st=window.scrollY+120;
+  for(const s of sections){
+    if(s.el.offsetTop<=st)current=s;
+  }
+  tocLinks.forEach(a=>a.classList.remove('active'));
+  if(current)current.link.classList.add('active');
+}
+window.addEventListener('scroll',updateActive,{passive:true});
+updateActive();
+
+// 移动端点击自动收起
+if(window.innerWidth<1100){
+  tocLinks.forEach(a=>a.addEventListener('click',()=>{
+    document.getElementById('sidebar').classList.remove('open');
+    document.querySelector('.hamburger').classList.remove('active');
+    document.querySelector('.overlay').classList.remove('show');
+  }));
+}
+</script>
+</body>
+</html>

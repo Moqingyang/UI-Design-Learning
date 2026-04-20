@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UI风格展示 - 游戏UI截图合集</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:#08080f;color:#e0e0e0;line-height:1.8;overflow-x:hidden}
+
+/* ===== 封面 ===== */
+.cover{position:relative;min-height:80vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.cover::before{content:'';position:absolute;inset:0;background:
+  radial-gradient(ellipse 80% 60% at 20% 30%,rgba(255,0,255,.08) 0%,transparent 60%),
+  radial-gradient(ellipse 70% 50% at 80% 70%,rgba(0,255,255,.08) 0%,transparent 60%),
+  radial-gradient(ellipse 50% 40% at 50% 50%,rgba(139,92,246,.1) 0%,transparent 60%);
+  z-index:1}
+.cover-bg{position:absolute;inset:0;background:
+  linear-gradient(rgba(8,8,15,.9),rgba(8,8,15,.6)),
+  repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(255,255,255,.02) 2px,rgba(255,255,255,.02) 4px);
+  z-index:0}
+.cover-content{position:relative;z-index:2;text-align:center;padding:40px}
+.cover h1{font-size:clamp(32px,5vw,56px);font-weight:800;letter-spacing:6px;margin-bottom:12px}
+.cover h1 .t1{background:linear-gradient(90deg,#ff00ff,#00ffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cover h1 .t2{color:rgba(255,255,255,.15);font-size:.6em;display:block;letter-spacing:12px;margin-top:4px}
+.cover .sub{color:rgba(200,200,220,.5);font-size:15px;margin-top:8px;letter-spacing:3px}
+.cover .style-pills{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:28px}
+.cover .pill{padding:6px 18px;border-radius:20px;font-size:12px;font-weight:600;letter-spacing:1px;backdrop-filter:blur(6px)}
+.pill.cyber{border:1px solid rgba(0,255,255,.3);color:#0ff;background:rgba(0,255,255,.06)}
+.pill.neon{border:1px solid rgba(255,0,255,.3);color:#f0f;background:rgba(255,0,255,.06)}
+.pill.anime{border:1px solid rgba(168,85,247,.3);color:#a855f7;background:rgba(168,85,247,.06)}
+.pill.dark{border:1px solid rgba(239,68,68,.3);color:#f87171;background:rgba(239,68,68,.06)}
+.pill.chinese{border:1px solid rgba(180,140,80,.3);color:#d4a853;background:rgba(180,140,80,.06)}
+.pill.qver{border:1px solid rgba(236,72,153,.3);color:#ec4899;background:rgba(236,72,153,.06)}
+
+/* ===== 导航栏 ===== */
+.nav{position:sticky;top:0;z-index:100;background:rgba(8,8,15,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.06);padding:0 20px}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.nav-inner::-webkit-scrollbar{height:0}
+.nav a{padding:14px 20px;font-size:13px;color:rgba(200,200,220,.5);text-decoration:none;white-space:nowrap;border-bottom:2px solid transparent;transition:all .3s;font-weight:500}
+.nav a:hover{color:rgba(200,200,220,.8)}
+.nav a.active{border-bottom-color:var(--accent);color:var(--accent)}
+
+/* ===== 风格区块 ===== */
+.style-section{max-width:1200px;margin:0 auto;padding:60px 20px 40px}
+.style-header{margin-bottom:32px;position:relative;padding-left:20px}
+.style-header::before{content:'';position:absolute;left:0;top:0;width:4px;height:100%;border-radius:2px;background:var(--accent)}
+.style-header h2{font-size:clamp(24px,4vw,36px);font-weight:700;color:var(--accent);display:flex;align-items:center;gap:12px}
+.style-header .desc{margin-top:8px;font-size:14px;color:rgba(200,200,220,.45);line-height:1.7}
+.style-header .color-bar{display:flex;gap:6px;margin-top:12px;align-items:center}
+.style-header .color-dot{width:24px;height:24px;border-radius:6px;border:2px solid rgba(255,255,255,.1)}
+.style-header .color-label{font-size:11px;color:rgba(200,200,220,.35);margin-left:4px}
+
+/* 特征标签 */
+.traits{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.trait{font-size:11px;padding:3px 10px;border-radius:8px;font-weight:500;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);color:rgba(200,200,220,.6)}
+
+/* ===== 图片网格 ===== */
+.gallery{display:grid;gap:16px;margin-bottom:60px}
+.gallery.cols-1{grid-template-columns:1fr}
+.gallery.cols-2{grid-template-columns:repeat(2,1fr)}
+.gallery.cols-3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:900px){.gallery.cols-2,.gallery.cols-3{grid-template-columns:1fr}}
+
+.gallery-item{position:relative;border-radius:12px;overflow:hidden;background:rgba(20,20,30,.6);border:1px solid rgba(255,255,255,.06);transition:all .4s cubic-bezier(.25,.8,.25,1);cursor:pointer}
+.gallery-item:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.12);box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.gallery-item img{width:100%;height:auto;display:block;transition:transform .5s}
+.gallery-item:hover img{transform:scale(1.02)}
+.gallery-item .caption{position:absolute;bottom:0;left:0;right:0;padding:16px 20px;background:linear-gradient(transparent,rgba(0,0,0,.85));opacity:0;transition:opacity .3s}
+.gallery-item:hover .caption{opacity:1}
+.caption .cap-title{font-size:14px;font-weight:600;color:#fff}
+.caption .cap-desc{font-size:11px;color:rgba(255,255,255,.6);margin-top:2px}
+
+/* 大图满宽 */
+.gallery-item.full{grid-column:1/-1}
+
+/* ===== Lightbox ===== */
+.lightbox{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.92);backdrop-filter:blur(16px);display:none;align-items:center;justify-content:center;cursor:zoom-out;padding:20px}
+.lightbox.show{display:flex}
+.lightbox img{max-width:95vw;max-height:90vh;border-radius:8px;box-shadow:0 20px 80px rgba(0,0,0,.6);object-fit:contain}
+.lightbox .lb-close{position:absolute;top:20px;right:24px;font-size:28px;color:rgba(255,255,255,.6);cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(255,255,255,.08);transition:all .2s}
+.lightbox .lb-close:hover{background:rgba(255,255,255,.15);color:#fff}
+
+/* ===== 分隔线 ===== */
+.divider{max-width:1200px;margin:0 auto;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.06) 20%,rgba(255,255,255,.06) 80%,transparent)}
+
+/* ===== 底部 ===== */
+.footer{text-align:center;padding:60px 20px 40px;color:rgba(200,200,220,.25);font-size:13px}
+.footer a{color:rgba(139,92,246,.6);text-decoration:none}
+
+/* ===== 回到顶部 ===== */
+.btt{position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:12px;background:rgba(30,30,50,.9);border:1px solid rgba(139,92,246,.25);color:#a78bfa;display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;opacity:0;transition:all .3s;z-index:100;backdrop-filter:blur(8px)}
+.btt.show{opacity:1}
+.btt:hover{border-color:rgba(139,92,246,.5);background:rgba(40,40,60,.95)}
+</style>
+</head>
+<body>
+
+<!-- 封面 -->
+<section class="cover">
+  <div class="cover-bg"></div>
+  <div class="cover-content">
+    <h1>
+      <span class="t1">UI 风格展示</span>
+      <span class="t2">GAME UI STYLE GALLERY</span>
+    </h1>
+    <p class="sub">六大主流游戏UI风格 · 真实截图参考合集</p>
+    <div class="style-pills">
+      <span class="pill cyber">赛博朋克</span>
+      <span class="pill neon">霓虹风格</span>
+      <span class="pill anime">二次元科幻</span>
+      <span class="pill dark">暗黑写实</span>
+      <span class="pill chinese">古风/国风</span>
+      <span class="pill qver">Q版二次元</span>
+    </div>
+  </div>
+</section>
+
+<!-- 吸顶导航 -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#cyberpunk" class="active" style="--accent:#0ff" data-section="cyberpunk">🌃 赛博朋克</a>
+    <a href="#neon" style="--accent:#f0f" data-section="neon">💜 霓虹风格</a>
+    <a href="#anime" style="--accent:#a855f7" data-section="anime">🌸 二次元科幻</a>
+    <a href="#dark" style="--accent:#f87171" data-section="dark">⚔️ 暗黑写实</a>
+    <a href="#chinese" style="--accent:#d4a853" data-section="chinese">🏯 古风/国风</a>
+    <a href="#qcute" style="--accent:#ec4899" data-section="qcute">🎀 Q版二次元</a>
+  </div>
+</nav>
+
+<!-- ======================== 赛博朋克 ======================== -->
+<section class="style-section" id="cyberpunk" style="--accent:#0ff">
+  <div class="style-header">
+    <h2>🌃 赛博朋克风格</h2>
+    <p class="desc">以"高科技、低生活、暗网感、未来都市"为核心主题，常用黑底+霓虹发光元素（粉、蓝、青），搭配科技网格、故障效果、HUD面板。赛博朋克UI强调冷冽的科技感与压迫性的信息密度。</p>
+    <div class="color-bar">
+      <div class="color-dot" style="background:#0a0a1a"></div>
+      <div class="color-dot" style="background:#ff00ff"></div>
+      <div class="color-dot" style="background:#00ffff"></div>
+      <div class="color-dot" style="background:#1a1a3e"></div>
+      <span class="color-label">典型配色</span>
+    </div>
+    <div class="traits">
+      <span class="trait">HUD面板</span>
+      <span class="trait">霓虹发光</span>
+      <span class="trait">深色底板</span>
+      <span class="trait">科技网格</span>
+      <span class="trait">故障效果</span>
+      <span class="trait">信息密度高</span>
+    </div>
+  </div>
+  <div class="gallery cols-1">
+    <div class="gallery-item full" onclick="openLB(this)">
+      <img src="images/赛博朋克UI截图展示/image1.png" alt="赛博朋克角色面板" loading="lazy">
+      <div class="caption">
+        <div class="cap-title">角色信息面板</div>
+        <div class="cap-desc">典型的HUD风格布局：左侧菜单导航、中间角色展示、右侧数据面板，粉青霓虹配色</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ======================== 霓虹风格 ======================== -->
+<section class="style-section" id="neon" style="--accent:#f0f">
+  <div class="style-header">
+    <h2>💜 霓虹风格</h2>
+    <p class="desc">模拟霓虹灯/荧光灯管的发光视觉效果，核心是"高饱和、高亮度、边缘发光、通透感"。多以细线条、边框、描边形式出现，常用于直播、社交平台的UI组件及按钮设计。</p>
+    <div class="color-bar">
+      <div class="color-dot" style="background:#ff00ff"></div>
+      <div class="color-dot" style="background:#00ffff"></div>
+      <div class="color-dot" style="background:#8b5cf6"></div>
+      <div class="color-dot" style="background:#0a0a20"></div>
+      <span class="color-label">典型配色</span>
+    </div>
+    <div class="traits">
+      <span class="trait">外发光/辉光</span>
+      <span class="trait">高饱和色彩</span>
+      <span class="trait">半透明线条</span>
+      <span class="trait">边框描边</span>
+      <span class="trait">通透感</span>
+    </div>
+  </div>
+  <div class="gallery cols-2">
+    <div class="gallery-item" onclick="openLB(this)">
+      <img src="images/霓虹风格UI截图展示/image1.png" alt="霓虹直播面板" loading="lazy">
+      <div class="caption">
+        <div class="cap-title">直播界面组件套件</div>
+        <div class="cap-desc">粉紫霓虹色调，包含摄像头框、信息条、状态按钮等完整直播UI组件</div>
+      </div>
+    </div>
+    <div class="gallery-item" onclick="openLB(this)">
+      <img src="images/霓虹风格UI截图展示/image3.png" alt="霓虹直播组件" loading="lazy">
+      <div class="caption">
+        <div class="cap-title">直播界面组件（蓝青配色）</div>
+        <div class="cap-desc">青蓝霓虹色调，与粉紫形成互补，包含面板框、按钮、标签等</div>
+      </div>
+    </div>
+  </div>
+  <div class="gallery cols-2" style="margin-top:16px">
+    <div class="gallery-item" onclick="openLB(this)">
+      <img src="images/霓虹风格UI截图展示/image2.png" alt="霓虹UI组件库" loading="lazy">
+      <div class="caption">
+        <div class="cap-title">霓虹风格完整UI组件库</div>
+        <div class="cap-desc">包含图表、按钮、数据面板、地图、进度条等数十种UI组件，展示霓虹风格的全面应用</div>
+      </div>
+    </div>
+    <div class="gallery-item" onclick="openLB(this)">
+      <img src="images/霓虹风格UI截图展示/image4.png" alt="霓虹按钮" loading="lazy">
+      <div class="caption">
+        <div class="cap-title">霓虹发光按钮合集</div>
+        <div class="cap-desc">六种颜色的霓虹发光按钮，展示典型的边缘发光效果和线条感</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ======================== 二次元科幻 ======================== -->
+<section class="style-section" id="anime" style="--accent:#a855f7">
+  <div class="style-header">
+    <h2>🌸 二次元科幻风格</h2>
+    <p class="desc">以二次元立绘为核心元素，背景多为浅色系渐变，界面通透、精致，按钮多为圆角、磨砂玻璃效果。融合科幻元素，营造未来感与二次元美学的结合。</p>
+    <div class="color-bar">
+      <div class="color-dot" style="background:#c084fc"></div>
+      <div class="color-dot" style="background:#e0d4f5"></div>
+      <div class="color-dot" style="background:#818cf8"></div>
+      <div class="color-dot" style="background:#f5f0ff"></div>
+      <span class="color-label">典型配色</span>
+    </div>
+    <div class="traits">
+      <span class="trait">二次元立绘</span>
+      <span class="trait">浅色渐变</span>
+      <span class="trait">磨砂玻璃</span>
+      <span class="trait">圆角按钮</span>
+      <span class="trait">通透精致</span>
+      <span class="trait">科幻元素</span>
+    </div>
+  </div>
+  <div class="gallery cols-1">
+    <div class="gallery-item full" onclick="openLB(this)">
+      <img src="images/二次元科幻风格/image1.png" alt="二次元科幻启动页" loading="lazy">
+      <div class="caption">
+        <div class="cap-title">游戏启动界面</div>
+        <div class="cap-desc">故障效果（Glitch）+ 紫粉渐变 + 大字体标题，融合科幻与二次元感</div>
+      </div>
+    </div>
+  </div>
+  <div class="gallery cols-2" style="margin-top:16px">
+    <div class="gallery-item" onclick="openLB(this)">
+      <img src="images/二次元科幻风格/image2.png" alt="角色档案面板" loading="lazy">
+      <div class="caption">
+        <div class="cap-title">角色档案面板</div>
+        <div class="cap-desc">浅紫渐变背景 + 精致立绘 + 属性数据面板，体现二次元科幻的精致感</div>
+      </div>
+    </div>
+    <div class="gallery-item" onclick="openLB(this)">
+      <img src="images/二次元科幻风格/image3.png" alt="关卡选择" loading="lazy">
+      <div class="caption">
+        <div class="cap-title">探访遗迹 · 关卡选择</div>
+        <div class="cap-desc">节点式关卡结构 + 冷灰紫色调 + 水墨风插画缩略图</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ======================== 暗黑写实 ======================== -->
+<section class="style-section" id="dark" style="--accent:#f87171">
+  <div class="style-header">
+    <h2>⚔️ 暗黑写实风格</h2>
+    <p class="desc">以暗色调、写实渲染为核心，常见于ARPG、魂类游戏。界面色彩以黑、暗红、金色为主，强调材质质感和厚重感，UI元素往往带有金属、石刻、皮革等纹理。</p>
+    <div class="color-bar">
+      <div class="color-dot" style="background:#1a1010"></div>
+      <div class="color-dot" style="background:#dc2626"></div>
+      <div class="color-dot" style="background:#d4a853"></div>
+      <div class="color-dot" style="background:#2a2020"></div>
+      <span class="color-label">典型配色</span>
+    </div>
+    <div class="traits">
+      <span class="trait">写实渲染</span>
+      <span class="trait">暗色调</span>
+      <span class="trait">金属质感</span>
+      <span class="trait">厚重感</span>
+      <span class="trait">暗红+金</span>
+      <span class="trait">信息简洁</span>
+    </div>
+  </div>
+  <div class="gallery cols-1">
+    <div class="gallery-item full" onclick="openLB(this)">
+      <img src="images/暗黑写实风格/image1.png" alt="暗黑角色面板" loading="lazy">
+      <div class="caption">
+        <div class="cap-title">角色面板</div>
+        <div class="cap-desc">暗黑风全屏角色展示，左侧简洁角色信息，右侧装备/社交入口，暗红+金色点缀</div>
+      </div>
+    </div>
+  </div>
+  <div class="gallery cols-2" style="margin-top:16px">
+    <div class="gallery-item" onclick="openLB(this)">
+      <img src="images/暗黑写实风格/image2.png" alt="任务地图" loading="lazy">
+      <div class="caption">
+        <div class="cap-title">任务关卡界面</div>
+        <div class="cap-desc">旧地图纹理 + 金色光束 + 写实道具图标，古典探险氛围</div>
+      </div>
+    </div>
+    <div class="gallery-item" onclick="openLB(this)">
+      <img src="images/暗黑写实风格/image3.png" alt="装备详情" loading="lazy">
+      <div class="caption">
+        <div class="cap-title">武器详情面板</div>
+        <div class="cap-desc">暗红辉光 + 血滴效果 + 金属质感武器渲染，极致暗黑美学</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ======================== 古风/国风 ======================== -->
+<section class="style-section" id="chinese" style="--accent:#d4a853">
+  <div class="style-header">
+    <h2>🏯 古风 / 国风</h2>
+    <p class="desc">以传统元素（毛笔字、水墨、祥云、印章）为核心，颜色多为墨黑、米白、朱砂、石青，质感偏宣纸、木纹。国风UI追求东方意境与留白美学。</p>
+    <div class="color-bar">
+      <div class="color-dot" style="background:#1a1510"></div>
+      <div class="color-dot" style="background:#f5efe0"></div>
+      <div class="color-dot" style="background:#c0392b"></div>
+      <div class="color-dot" style="background:#5c7a8a"></div>
+      <span class="color-label">典型配色</span>
+    </div>
+    <div class="traits">
+      <span class="trait">水墨画风</span>
+      <span class="trait">毛笔书法</span>
+      <span class="trait">宣纸质感</span>
+      <span class="trait">留白意境</span>
+      <span class="trait">朱砂石青</span>
+      <span class="trait">东方美学</span>
+    </div>
+  </div>
+  <div class="gallery cols-1">
+    <div class="gallery-item full" onclick="openLB(this)">
+      <img src="images/古风UI截图展示/image1.png" alt="古风武器展示" loading="lazy">
+      <div class="caption">
+        <div class="cap-title">武器/武学系统多界面合集</div>
+        <div class="cap-desc">9宫格展示古风游戏多个功能界面：活动、武器详情、技能树等，水墨背景+毛笔字标题</div>
+      </div>
+    </div>
+  </div>
+  <div class="gallery cols-1" style="margin-top:16px">
+    <div class="gallery-item full" onclick="openLB(this)">
+      <img src="images/古风UI截图展示/image2.png" alt="古风角色系统" loading="lazy">
+      <div class="caption">
+        <div class="cap-title">角色系统多界面合集</div>
+        <div class="cap-desc">9宫格展示角色界面：数据面板、装备、宝石镶嵌、服装等，淡雅水墨风+仙侠元素</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ======================== Q版二次元 ======================== -->
+<section class="style-section" id="qcute" style="--accent:#ec4899">
+  <div class="style-header">
+    <h2>🎀 Q版二次元</h2>
+    <p class="desc">以Q版（SD头身比）角色立绘为核心，色彩明亮活泼，界面元素圆润、可爱，按钮多为糖果色渐变，整体视觉轻松愉悦，适配休闲、养成类游戏。</p>
+    <div class="color-bar">
+      <div class="color-dot" style="background:#ec4899"></div>
+      <div class="color-dot" style="background:#a78bfa"></div>
+      <div class="color-dot" style="background:#60a5fa"></div>
+      <div class="color-dot" style="background:#f0e6ff"></div>
+      <span class="color-label">典型配色</span>
+    </div>
+    <div class="traits">
+      <span class="trait">Q版角色</span>
+      <span class="trait">糖果色彩</span>
+      <span class="trait">圆润元素</span>
+      <span class="trait">活泼轻松</span>
+      <span class="trait">渐变按钮</span>
+      <span class="trait">可爱风</span>
+    </div>
+  </div>
+  <div class="gallery cols-1">
+    <div class="gallery-item full" onclick="openLB(this)">
+      <img src="images/Q版二次元/image1.png" alt="Q版角色面板" loading="lazy">
+      <div class="caption">
+        <div class="cap-title">角色管理面板</div>
+        <div class="cap-desc">粉蓝渐变背景 + Q版角色立绘 + 圆角信息卡片，糖果色系按钮</div>
+      </div>
+    </div>
+  </div>
+  <div class="gallery cols-2" style="margin-top:16px">
+    <div class="gallery-item" onclick="openLB(this)">
+      <img src="images/Q版二次元/image2.png" alt="Q版角色选择" loading="lazy">
+      <div class="caption">
+        <div class="cap-title">角色选择 / 皮肤展示</div>
+        <div class="cap-desc">卡片式角色展示 + 涂鸦风标题 + 粉色渐变按钮，视觉活泼生动</div>
+      </div>
+    </div>
+    <div class="gallery-item" onclick="openLB(this)">
+      <img src="images/Q版二次元/image3.png" alt="Q版冒险任务" loading="lazy">
+      <div class="caption">
+        <div class="cap-title">冒险任务界面</div>
+        <div class="cap-desc">手账/便签风格布局 + 插画卡片 + 清新淡彩色调，充满日系治愈感</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLB()">
+  <div class="lb-close" onclick="closeLB()">✕</div>
+  <img id="lb-img" src="" alt="放大查看">
+</div>
+
+<!-- 回到顶部 -->
+<div class="btt" id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+
+<!-- 底部 -->
+<div class="footer">
+  <p>UI风格展示 · 游戏UI截图参考合集</p>
+  <p style="margin-top:8px"><a href="../UI设计原则/常用UI设计原则与核心术语.html">← 返回设计原则文档</a></p>
+</div>
+
+<script>
+// Lightbox
+function openLB(el){
+  const img=el.querySelector('img');
+  if(!img)return;
+  const lb=document.getElementById('lightbox');
+  document.getElementById('lb-img').src=img.src;
+  lb.classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function closeLB(){
+  document.getElementById('lightbox').classList.remove('show');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLB()});
+
+// 导航高亮
+const navLinks=document.querySelectorAll('.nav a');
+const secs=document.querySelectorAll('.style-section');
+function updateNav(){
+  let cur=secs[0];
+  const st=window.scrollY+100;
+  for(const s of secs){if(s.offsetTop<=st)cur=s}
+  navLinks.forEach(a=>{
+    const active=a.getAttribute('data-section')===cur.id;
+    a.classList.toggle('active',active);
+    if(active)a.style.setProperty('--accent',getComputedStyle(cur).getPropertyValue('--accent'));
+  });
+}
+window.addEventListener('scroll',updateNav,{passive:true});
+updateNav();
+
+// 平滑滚动
+navLinks.forEach(a=>a.addEventListener('click',e=>{
+  e.preventDefault();
+  const id=a.getAttribute('href').slice(1);
+  const el=document.getElementById(id);
+  if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+}));
+
+// 回到顶部按钮
+window.addEventListener('scroll',()=>{
+  document.getElementById('btt').classList.toggle('show',window.scrollY>400);
+},{passive:true});
+</script>
+</body>
+</html>
