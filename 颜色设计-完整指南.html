@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="zh-CN" style="scroll-behavior:smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>颜色设计 - 完整指南</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:#fafafa;color:#2c2c2c;line-height:1.8;transition:margin-left .3s ease}
+.cover{background:linear-gradient(135deg,#667eea,#764ba2 50%,#f093fb);color:#fff;text-align:center;padding:90px 40px 70px;position:relative;overflow:hidden}
+.cover h1{font-size:52px;font-weight:800;letter-spacing:8px;text-shadow:0 4px 20px rgba(0,0,0,.2)}
+.cover .sub{font-size:18px;margin-top:14px;opacity:.9;font-weight:300;letter-spacing:4px}
+.cover .tags{margin-top:28px}
+.cover .tag{display:inline-block;padding:5px 18px;border:1px solid rgba(255,255,255,.5);border-radius:20px;margin:4px 8px;font-size:13px}
+.ct{max-width:960px;margin:0 auto;padding:0 20px}
+.sec{margin:44px 0;background:#fff;border-radius:16px;padding:44px;box-shadow:0 2px 20px rgba(0,0,0,.06)}
+.sh{display:flex;align-items:center;gap:12px;margin-bottom:28px;padding-bottom:14px;border-bottom:3px solid}
+.sh h2{font-size:30px;font-weight:700}
+.sh .n{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700;flex-shrink:0}
+h3{font-size:21px;margin:32px 0 14px;padding-left:12px;border-left:4px solid #4A90D9}
+h4{font-size:17px;margin:20px 0 10px;color:#555}
+p{margin:10px 0;color:#444}
+.vb{margin:20px 0;text-align:center;padding:28px 16px;background:#f8f9fa;border-radius:12px;border:1px solid #e8e8e8}
+.vb canvas{display:block;margin:0 auto}
+.vb .cap{margin-top:10px;font-size:12px;color:#888}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:13px}
+thead th{background:#f0f4f8;padding:10px 14px;text-align:left;font-weight:600;border-bottom:2px solid #ddd}
+tbody td{padding:9px 14px;border-bottom:1px solid #eee;vertical-align:top}
+tbody tr:hover{background:#fafbfc}
+.cd{display:inline-block;width:26px;height:26px;border-radius:50%;vertical-align:middle;margin-right:6px;border:2px solid rgba(0,0,0,.1)}
+.td{display:flex;gap:6px;margin:10px 0;flex-wrap:wrap}
+.ts{width:56px;height:56px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.3);border:2px solid rgba(0,0,0,.1)}
+.pc{margin:20px 0;border:1px solid #e8e8e8;border-radius:12px;overflow:hidden}
+.ph{padding:18px 22px;display:flex;justify-content:space-between;align-items:center;background:#f8f9fa}
+.ph h4{margin:0;font-size:17px}
+.et{padding:3px 12px;border-radius:14px;font-size:12px;font-weight:500}
+.pcl{display:flex;height:72px}
+.pcl div{flex:1;display:flex;align-items:flex-end;justify-content:center;padding:7px;font-size:11px;color:rgba(255,255,255,.9);text-shadow:0 1px 3px rgba(0,0,0,.4);font-weight:500}
+.pd{padding:14px 22px;font-size:13px;color:#555;background:#fafafa;line-height:1.7}
+.tip{margin:18px 0;padding:18px 22px;border-radius:10px;border-left:5px solid;font-size:13px}
+.tip.i{background:#EAF2FB;border-color:#4A90D9;color:#2a6cb8}
+.tip.w{background:#FFF8E1;border-color:#FFB300;color:#8d6900}
+.tip.k{background:#F3E5F5;border-color:#9C27B0;color:#6A1B9A}
+.tip strong{display:block;margin-bottom:4px}
+.eg{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin:18px 0}
+.ec{padding:18px;border-radius:12px;color:#fff}
+.ec h5{font-size:15px;margin-bottom:6px}
+.ec p{font-size:12px;color:rgba(255,255,255,.9);line-height:1.6}
+.ec .uc{margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.3);font-size:11px;color:rgba(255,255,255,.8)}
+.ms{display:inline-block;width:22px;height:22px;border-radius:4px;border:1px solid rgba(0,0,0,.1);vertical-align:middle;margin-right:2px}
+.row{display:flex;gap:2px;align-items:center}
+footer{text-align:center;padding:50px 20px;color:#aaa;font-size:12px}
+/* 左侧固定侧边栏导航 */
+.sidebar-nav{position:fixed;top:0;left:0;width:220px;height:100vh;background:#fff;border-right:1px solid #e8e8e8;overflow-y:auto;padding:20px 0;z-index:100;transform:translateX(-100%);transition:transform .3s ease;box-shadow:2px 0 12px rgba(0,0,0,.04)}
+.sidebar-nav.visible{transform:translateX(0)}
+.sidebar-nav::-webkit-scrollbar{width:4px}
+.sidebar-nav::-webkit-scrollbar-thumb{background:#ddd;border-radius:2px}
+.sidebar-nav::-webkit-scrollbar-thumb:hover{background:#bbb}
+.sidebar-title{font-size:14px;font-weight:700;color:#333;padding:8px 20px 14px;border-bottom:1px solid #f0f0f0;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.sidebar-list{list-style:none;padding:0;margin:0}
+.sidebar-list li{margin:0}
+.sidebar-list a{display:block;padding:5px 20px;text-decoration:none;font-size:13px;color:#666;transition:all .15s;border-left:3px solid transparent;line-height:1.5}
+.sidebar-list a:hover{background:#f8f9ff;color:#4A90D9}
+.sidebar-list a.active{color:#4A90D9;background:#f0f4ff;border-left-color:#4A90D9;font-weight:600}
+.sidebar-list .nav-h2{font-weight:600;font-size:13px;color:#333;padding-top:10px;padding-bottom:6px}
+.sidebar-list .nav-h2 .nav-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px;vertical-align:middle}
+.sidebar-list .nav-h3{padding-left:36px;font-size:12px;color:#888}
+/* 侧边栏展开时正文偏移 */
+body.sidebar-open{margin-left:220px}
+body.sidebar-open .cover{margin-left:-220px;padding-left:calc(40px + 220px)}
+/* 侧边栏切换按钮 */
+.sidebar-toggle{position:fixed;top:16px;left:16px;z-index:101;width:36px;height:36px;border-radius:10px;background:#fff;border:1px solid #e0e0e0;box-shadow:0 2px 8px rgba(0,0,0,.1);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.sidebar-toggle:hover{background:#f0f4ff;border-color:#4A90D9}
+.sidebar-toggle svg{width:18px;height:18px;fill:none;stroke:#555;stroke-width:2;stroke-linecap:round}
+body.sidebar-open .sidebar-toggle{left:calc(220px + 16px)}
+/* 响应式 */
+@media(max-width:900px){.sidebar-nav{width:200px}body.sidebar-open{margin-left:200px}body.sidebar-open .cover{margin-left:-200px;padding-left:calc(40px + 200px)}body.sidebar-open .sidebar-toggle{left:calc(200px + 16px)}}
+@media(max-width:640px){.sidebar-nav{width:180px}body.sidebar-open{margin-left:0}.sidebar-nav.visible{box-shadow:4px 0 20px rgba(0,0,0,.15)}body.sidebar-open .cover{margin-left:0;padding-left:40px}body.sidebar-open .sidebar-toggle{left:16px}.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:99}body.sidebar-open .sidebar-overlay{display:block}}
+@media print{body{background:#fff}.sec{box-shadow:none;border:1px solid #ddd}}
+</style>
+</head>
+<body>
+<div class="cover">
+<h1>颜 色 设 计</h1>
+<div class="sub">Color Design Complete Guide</div>
+<div class="tags"><span class="tag">理论基础</span><span class="tag">颜色情感</span><span class="tag">配色方案</span></div>
+</div>
+
+<!-- 侧边栏切换按钮 -->
+<button class="sidebar-toggle" onclick="toggleSidebar()" title="目录导航">
+<svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+</button>
+
+<!-- 左侧固定导航 -->
+<nav class="sidebar-nav" id="sidebarNav">
+<div class="sidebar-title">📑 目录导航</div>
+<ul class="sidebar-list">
+<li><a class="nav-h2" href="#p1"><span class="nav-dot" style="background:#4A90D9"></span>1. 颜色理论</a></li>
+<li><a class="nav-h3" href="#s1-1">1.1 三原色</a></li>
+<li><a class="nav-h3" href="#s1-2">1.2 HSB 色彩模型</a></li>
+<li><a class="nav-h3" href="#s1-3">1.3 色温</a></li>
+<li><a class="nav-h3" href="#s1-4">1.4 色调关系</a></li>
+
+<li><a class="nav-h2" href="#p2"><span class="nav-dot" style="background:#E74C3C"></span>2. 颜色情感</a></li>
+<li><a class="nav-h3" href="#s2-1">2.1 色相环颜色情感总览</a></li>
+<li><a class="nav-h3" href="#s2-2">2.2 色调情感总结</a></li>
+<li><a class="nav-h3" href="#s2-3">2.3 明度与饱和度的情感维度</a></li>
+
+<li><a class="nav-h2" href="#p3"><span class="nav-dot" style="background:#2ECC71"></span>3. 配色方案</a></li>
+<li><a class="nav-h3" href="#s3-1">3.1 单色配色</a></li>
+<li><a class="nav-h3" href="#s3-2">3.2 邻近色配色</a></li>
+<li><a class="nav-h3" href="#s3-3">3.3 互补色配色</a></li>
+<li><a class="nav-h3" href="#s3-4">3.4 分裂互补色</a></li>
+<li><a class="nav-h3" href="#s3-5">3.5 三角配色</a></li>
+<li><a class="nav-h3" href="#s3-6">3.6 四角配色</a></li>
+<li><a class="nav-h3" href="#s3-7">3.7 情感→配色速查表</a></li>
+
+<li><a class="nav-h2" href="#p4"><span class="nav-dot" style="background:#FF9800"></span>4. 产品配色完整流程</a></li>
+<li><a class="nav-h3" href="#s4-ex">实战举例：健康饮食App</a></li>
+
+<li><a class="nav-h2" href="#p5"><span class="nav-dot" style="background:#9C27B0"></span>5. 品牌配色案例分析</a></li>
+<li><a class="nav-h3" href="#s5-1">案例 1：微信</a></li>
+<li><a class="nav-h3" href="#s5-2">案例 2：淘宝</a></li>
+<li><a class="nav-h3" href="#s5-3">案例 3：支付宝</a></li>
+<li><a class="nav-h3" href="#s5-4">案例 4：Spotify</a></li>
+<li><a class="nav-h3" href="#s5-quiz">🧪 配色分析练习</a></li>
+</ul>
+</nav>
+<div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+<div class="ct">
+<!-- PART 1 -->
+<div class="sec" id="p1">
+<div class="sh" style="border-color:#4A90D9"><div class="n" style="background:#4A90D9">1</div><h2>颜色理论</h2></div>
+
+<h3 id="s1-1">1.1 三原色</h3>
+<p>颜色混合分为两种系统，理解它们是所有颜色理论的基础：</p>
+<div style="display:flex;gap:20px;flex-wrap:wrap;margin:16px 0">
+<div style="flex:1;min-width:260px">
+<h4>🎨 颜料三原色（减色法 CMYK）</h4>
+<p>用于<b>印刷、绘画</b>等物理媒介。三原色为<b>红、黄、蓝</b>。颜料混合越多越<b>暗</b>（趋向黑色），因为颜料吸收光线。</p>
+<div class="td">
+<div class="ts" style="background:#FF0000">红</div>
+<div class="ts" style="background:#FFFF00;color:#333;text-shadow:none">黄</div>
+<div class="ts" style="background:#0000FF">蓝</div>
+</div>
+</div>
+<div style="flex:1;min-width:260px">
+<h4>💡 光学三原色（加色法 RGB）</h4>
+<p>用于<b>屏幕、显示器</b>等发光设备。三原色为<b>红(R)、绿(G)、蓝(B)</b>。光线混合越多越<b>亮</b>（趋向白色）。</p>
+<div class="td">
+<div class="ts" style="background:#FF0000">R 红</div>
+<div class="ts" style="background:#00CC00">G 绿</div>
+<div class="ts" style="background:#0000FF">B 蓝</div>
+</div>
+</div>
+</div>
+<div class="vb"><canvas id="c1" width="680" height="250"></canvas><div class="cap">左：颜料三原色混合（减色）｜右：光学三原色混合（加色）</div></div>
+<div class="tip i"><strong>💡 UI设计中的应用</strong>UI设计面向屏幕，主要使用 RGB / HSB 体系。需要印刷输出时才转换为 CMYK。</div>
+
+<h3 id="s1-2">1.2 HSB 色彩模型</h3>
+<p>HSB 是最符合人类直觉的色彩描述方式，也是 UI 设计中最常用的模型：</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:16px 0">
+<div style="background:linear-gradient(135deg,#FF6B6B,#FFE66D,#4ECDC4,#6C5CE7);padding:20px;border-radius:12px;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.3)">
+<h4 style="margin:0 0 6px;color:#fff">H — 色相 (Hue)</h4>
+<p style="color:rgba(255,255,255,.95);font-size:13px">颜色的<b>种类</b>，取值 0°~360°。想象一个圆形色盘，每个角度对应一种颜色。</p>
+</div>
+<div style="background:linear-gradient(135deg,#2196F3,#90CAF9);padding:20px;border-radius:12px;color:#fff">
+<h4 style="margin:0 0 6px;color:#fff">S — 饱和度 (Saturation)</h4>
+<p style="color:rgba(255,255,255,.95);font-size:13px">颜色的<b>鲜艳程度</b>，0%~100%。0%=灰色，100%=最鲜艳纯色。</p>
+</div>
+<div style="background:linear-gradient(135deg,#333,#999);padding:20px;border-radius:12px;color:#fff">
+<h4 style="margin:0 0 6px;color:#fff">B — 明度 (Brightness)</h4>
+<p style="color:rgba(255,255,255,.95);font-size:13px">颜色的<b>明暗程度</b>，0%~100%。0%=纯黑，100%=最亮。</p>
+</div>
+</div>
+<div class="vb"><canvas id="c2" width="680" height="350"></canvas><div class="cap">HSB 色彩模型：色相环 + 饱和度×明度矩阵（以蓝色H=210°为例）</div></div>
+<div class="tip k"><strong>🔑 核心记忆法</strong>H决定「是什么颜色」，S决定「纯不纯」，B决定「亮不亮」。调整情感时：改S和B比改H更有效！</div>
+
+<h3 id="s1-3">1.3 色温</h3>
+<p>色温是颜色给人的<b>冷暖感知</b>，是心理感受而非物理温度，直接影响设计的情感基调。</p>
+<div style="height:52px;border-radius:12px;margin:14px 0;display:flex;align-items:center;justify-content:space-between;padding:0 22px;color:#fff;font-weight:600;font-size:14px;text-shadow:0 1px 4px rgba(0,0,0,.3);background:linear-gradient(to right,#FF4500,#FF8C00,#FFD700,#FFFACD,#E0E0E0,#87CEEB,#4169E1,#191970)">
+<span>🔥 暖 色</span><span>中 性</span><span>❄️ 冷 色</span>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0">
+<div style="background:#FFF0F0;border:2px solid #FFCDD2;border-radius:12px;padding:18px">
+<h4 style="color:#D32F2F;margin:0 0 10px">🔥 暖色系 (0°~60°)</h4>
+<div class="td">
+<div class="ts" style="background:#FF0000;width:40px;height:40px">红</div>
+<div class="ts" style="background:#FF6600;width:40px;height:40px">橙</div>
+<div class="ts" style="background:#FFCC00;width:40px;height:40px;color:#333;text-shadow:none">黄</div>
+</div>
+<p style="font-size:12px;margin-top:8px"><b>感受：</b>温暖、热情、活力<br><b>联想：</b>火焰、阳光、秋叶</p>
+</div>
+<div style="background:#F0FFF0;border:2px solid #C8E6C9;border-radius:12px;padding:18px">
+<h4 style="color:#388E3C;margin:0 0 10px">⚖️ 中性色</h4>
+<div class="td">
+<div class="ts" style="background:#00CC00;width:40px;height:40px">绿</div>
+<div class="ts" style="background:#9C27B0;width:40px;height:40px">紫</div>
+</div>
+<p style="font-size:12px;margin-top:8px"><b>色相：</b>绿(120°)、紫(270°~300°)<br><b>特点：</b>偏暖则暖，偏冷则冷</p>
+</div>
+<div style="background:#F0F0FF;border:2px solid #BBDEFB;border-radius:12px;padding:18px">
+<h4 style="color:#1565C0;margin:0 0 10px">❄️ 冷色系 (160°~260°)</h4>
+<div class="td">
+<div class="ts" style="background:#00BFFF;width:40px;height:40px">青</div>
+<div class="ts" style="background:#0066FF;width:40px;height:40px">蓝</div>
+<div class="ts" style="background:#4B0082;width:40px;height:40px">靛</div>
+</div>
+<p style="font-size:12px;margin-top:8px"><b>感受：</b>冷静、理性、专业<br><b>联想：</b>海洋、天空、冰雪</p>
+</div>
+</div>
+<div class="vb"><canvas id="c3" width="500" height="280"></canvas><div class="cap">色相环上的冷暖色区域分布</div></div>
+
+<h3 id="s1-4">1.4 色调关系</h3>
+<p>色调关系指色相环上不同颜色的位置关系，是配色的基础。</p>
+<div style="margin:20px 0">
+<h4>① 同类色（Monochromatic）— 角度差 15° 以内</h4>
+<p>同一色相或极相近色相（15°以内），通过改变明度和饱和度创造层次。<b>最和谐、最安全。</b></p>
+<div class="td">
+<div class="ts" style="background:#1A237E">深蓝</div><div class="ts" style="background:#303F9F">蓝</div>
+<div class="ts" style="background:#5C6BC0">中蓝</div><div class="ts" style="background:#9FA8DA">浅蓝</div>
+<div class="ts" style="background:#C5CAE9;color:#333;text-shadow:none">极浅</div>
+</div>
+</div>
+<div style="margin:20px 0">
+<h4>② 邻近色（Analogous）— 角度差 30°~60°</h4>
+<p>色相环上相邻颜色。<b>自然和谐，有变化不冲突。</b></p>
+<div class="td">
+<div class="ts" style="background:#FF6600">橙</div><div class="ts" style="background:#FF9900">橙黄</div>
+<div class="ts" style="background:#FFCC00;color:#333;text-shadow:none">黄</div><div class="ts" style="background:#CCFF00;color:#333;text-shadow:none">黄绿</div>
+</div>
+</div>
+<div style="margin:20px 0">
+<h4>③ 对比色（Contrasting）— 角度差 120°</h4>
+<p>色相环上距离较远的颜色。<b>对比强烈但不极端。</b></p>
+<div class="td">
+<div class="ts" style="background:#FF0000">红</div><div class="ts" style="background:#ccc;color:#333;text-shadow:none;width:30px">→</div>
+<div class="ts" style="background:#0000FF">蓝</div>
+</div>
+</div>
+<div style="margin:20px 0">
+<h4>④ 互补色（Complementary）— 角度差 180°</h4>
+<p>色相环正对面的颜色。<b>最强对比、最大视觉冲击。</b></p>
+<div class="td">
+<div class="ts" style="background:#FF0000">红</div><div class="ts" style="background:#ccc;color:#333;text-shadow:none;width:30px">⟷</div>
+<div class="ts" style="background:#00FFFF">青</div>
+<div style="width:16px"></div>
+<div class="ts" style="background:#FF8800">橙</div><div class="ts" style="background:#ccc;color:#333;text-shadow:none;width:30px">⟷</div>
+<div class="ts" style="background:#0066FF">蓝</div>
+</div>
+</div>
+<div class="vb"><canvas id="c4" width="660" height="440"></canvas><div class="cap">四种色调关系在色相环上的位置示意</div></div>
+<div class="tip w"><strong>⚠️ 设计提醒</strong>互补色中通常一个颜色占 70%+，另一个作为点缀色（10%~30%）。等面积互补色会刺眼。</div>
+</div>
+
+<!-- PART 2 -->
+<div class="sec" id="p2">
+<div class="sh" style="border-color:#E74C3C"><div class="n" style="background:#E74C3C">2</div><h2>颜色情感</h2></div>
+<p style="font-size:15px">颜色不仅是视觉信号，更是<b>情感语言</b>。理解颜色情感是做好设计的关键。</p>
+
+<h3 id="s2-1">2.1 色相环颜色情感总览</h3>
+<div class="vb"><canvas id="c5" width="520" height="520"></canvas><div class="cap">色相环情感分布图 — 每种颜色携带独特的情感信息</div></div>
+
+<table>
+<thead><tr><th>颜色</th><th>色相</th><th>正面情感</th><th>负面情感</th><th>应用场景</th><th>代表品牌</th></tr></thead>
+<tbody>
+<tr><td><span class="cd" style="background:#FF0000"></span>红色</td><td>0°</td><td>热情、活力、爱情、喜庆</td><td>危险、愤怒、紧张</td><td>促销、警告、节日、美食</td><td>可口可乐、YouTube</td></tr>
+<tr><td><span class="cd" style="background:#FF6600"></span>橙色</td><td>30°</td><td>温暖、友好、创意、食欲</td><td>廉价、浮躁</td><td>美食、电商、社交</td><td>淘宝、Fanta</td></tr>
+<tr><td><span class="cd" style="background:#FFD700"></span>黄色</td><td>60°</td><td>乐观、快乐、智慧、光明</td><td>焦虑、警告、幼稚</td><td>出租车、儿童产品</td><td>麦当劳、美团</td></tr>
+<tr><td><span class="cd" style="background:#7CFC00"></span>黄绿</td><td>90°</td><td>新鲜、年轻、生命力</td><td>不成熟、酸涩</td><td>有机食品、环保</td><td>Android</td></tr>
+<tr><td><span class="cd" style="background:#00CC00"></span>绿色</td><td>120°</td><td>自然、健康、安全、和平</td><td>嫉妒、毒性</td><td>环保、医疗、金融</td><td>微信、星巴克</td></tr>
+<tr><td><span class="cd" style="background:#00CED1"></span>青色</td><td>180°</td><td>清新、干净、科技、未来</td><td>冷漠、疏远</td><td>科技、清洁用品</td><td>Tiffany</td></tr>
+<tr><td><span class="cd" style="background:#0066FF"></span>蓝色</td><td>210°~240°</td><td>信任、专业、冷静、稳重</td><td>忧郁、冰冷</td><td>企业、金融、社交</td><td>Facebook、支付宝</td></tr>
+<tr><td><span class="cd" style="background:#4B0082"></span>靛蓝</td><td>260°</td><td>深邃、神秘、直觉</td><td>抑郁、封闭</td><td>冥想、高端科技</td><td>Twitch</td></tr>
+<tr><td><span class="cd" style="background:#9C27B0"></span>紫色</td><td>280°~300°</td><td>高贵、创意、神秘、浪漫</td><td>忧伤、不安</td><td>奢侈品、美妆</td><td>Yahoo、Cadbury</td></tr>
+<tr><td><span class="cd" style="background:#FF69B4"></span>粉色</td><td>330°~350°</td><td>甜美、温柔、浪漫、可爱</td><td>幼稚、脆弱</td><td>美妆、母婴、甜品</td><td>Barbie</td></tr>
+<tr><td><span class="cd" style="background:#fff;border:2px solid #ddd"></span>白色</td><td>-</td><td>纯洁、简约、干净、空间</td><td>空虚、苍白</td><td>极简设计、医疗</td><td>Apple</td></tr>
+<tr><td><span class="cd" style="background:#333"></span>黑色</td><td>-</td><td>高端、力量、权威、优雅</td><td>死亡、恐惧</td><td>奢侈品、时尚</td><td>Chanel、Nike</td></tr>
+</tbody>
+</table>
+
+<h3 id="s2-2">2.2 色调情感总结</h3>
+<p>同一色相通过改变饱和度和明度形成不同<b>色调</b>，情感会<b>巨大变化</b>：</p>
+<div class="vb"><canvas id="c6" width="680" height="360"></canvas><div class="cap">以蓝色(H=210°)为例：不同色调传递截然不同的情感</div></div>
+
+<table>
+<thead><tr><th>色调类型</th><th>色样</th><th>HSB特征</th><th>情感关键词</th><th>适用场景</th></tr></thead>
+<tbody>
+<tr><td><b>纯色调 Vivid</b></td><td><span class="cd" style="background:hsl(210,100%,50%)"></span></td><td>S=100%, B=100%</td><td>鲜明、活力、年轻、醒目</td><td>CTA按钮、促销、运动</td></tr>
+<tr><td><b>明色调 Tint</b></td><td><span class="cd" style="background:hsl(210,40%,85%)"></span></td><td>S低, B高</td><td>轻柔、治愈、温和、浪漫</td><td>母婴、美妆、背景色</td></tr>
+<tr><td><b>暗色调 Shade</b></td><td><span class="cd" style="background:hsl(210,80%,25%)"></span></td><td>S高, B低</td><td>沉稳、高端、权威、正式</td><td>奢侈品、金融、夜间模式</td></tr>
+<tr><td><b>浊色调 Muted</b></td><td><span class="cd" style="background:hsl(210,30%,55%)"></span></td><td>S中, B中</td><td>复古、文艺、柔和、知性</td><td>文艺App、杂志排版</td></tr>
+<tr><td><b>灰色调 Grayish</b></td><td><span class="cd" style="background:hsl(210,10%,60%)"></span></td><td>S极低, B中</td><td>低调、中性、专业</td><td>企业网站、次要信息</td></tr>
+</tbody>
+</table>
+
+<h3 id="s2-3">2.3 明度与饱和度的情感维度</h3>
+<p>这是核心秘诀：同一色相仅调整 S 和 B，就能表达完全不同的情感。</p>
+<div class="vb"><canvas id="c7" width="460" height="460"></canvas><div class="cap">饱和度(S) × 明度(B) 情感矩阵 — 蓝色(H=210°)</div></div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0">
+<div>
+<h4>📊 饱和度影响</h4>
+<table><thead><tr><th>饱和度</th><th>情感</th></tr></thead><tbody>
+<tr><td>高 80%~100%</td><td>活力、兴奋、年轻、张扬</td></tr>
+<tr><td>中 40%~70%</td><td>舒适、自然、和谐</td></tr>
+<tr><td>低 10%~30%</td><td>优雅、复古、内敛、高级</td></tr>
+<tr><td>极低 0%~10%</td><td>中性、专业、背景感</td></tr>
+</tbody></table>
+</div>
+<div>
+<h4>💡 明度影响</h4>
+<table><thead><tr><th>明度</th><th>情感</th></tr></thead><tbody>
+<tr><td>高 80%~100%</td><td>轻盈、乐观、清新、开放</td></tr>
+<tr><td>中 40%~70%</td><td>稳重、可靠、成熟</td></tr>
+<tr><td>低 10%~30%</td><td>沉重、神秘、权威、高端</td></tr>
+<tr><td>极低 0%~10%</td><td>深邃、恐惧、力量</td></tr>
+</tbody></table>
+</div>
+</div>
+
+<div class="tip k"><strong>🔑 情感速查公式</strong>
+<b>高S + 高B</b> = 活泼、年轻（儿童App、运动品牌）<br>
+<b>高S + 低B</b> = 深沉、高端（奢侈品、暗色主题）<br>
+<b>低S + 高B</b> = 温柔、治愈（母婴、医疗、极简）<br>
+<b>低S + 低B</b> = 复古、怀旧（复古海报、文艺杂志）
+</div>
+
+<h4 style="margin-top:28px">🎯 设计场景 → 颜色情感快速匹配</h4>
+<div class="eg">
+<div class="ec" style="background:linear-gradient(135deg,#FF416C,#FF4B2B)"><h5>💃 热情/兴奋</h5><p>高饱和暖色：红、橙<br>S>80%, B>70%</p><div class="uc">✦ 促销活动 · 美食 · 节日</div></div>
+<div class="ec" style="background:linear-gradient(135deg,#667eea,#764ba2)"><h5>✨ 高端/优雅</h5><p>低饱和冷色 + 暗色调<br>紫/蓝/黑 S<50% B<50%</p><div class="uc">✦ 奢侈品 · 高端科技</div></div>
+<div class="ec" style="background:linear-gradient(135deg,#43e97b,#38f9d7)"><h5>🌿 自然/健康</h5><p>中等饱和绿色系<br>S:50%~70% B:60%~80%</p><div class="uc">✦ 有机食品 · 健身 · 环保</div></div>
+<div class="ec" style="background:linear-gradient(135deg,#4facfe,#00f2fe)"><h5>🔬 科技/信任</h5><p>中高饱和蓝色<br>S:60%~80% B:60%~90%</p><div class="uc">✦ 金融 · 企业 · SaaS</div></div>
+<div class="ec" style="background:linear-gradient(135deg,#fccb90,#d57eeb)"><h5>🎨 创意/浪漫</h5><p>中饱和渐变：粉→紫→橙<br>S:40%~70% B:70%~90%</p><div class="uc">✦ 美妆 · 艺术 · 婚礼</div></div>
+<div class="ec" style="background:linear-gradient(135deg,#a8edea,#fed6e3)"><h5>🍼 温柔/治愈</h5><p>低饱和高明度粉/蓝/绿<br>S<30% B>80%</p><div class="uc">✦ 母婴 · 冥想 · 日系</div></div>
+</div>
+</div>
+
+<!-- PART 3 -->
+<div class="sec" id="p3">
+<div class="sh" style="border-color:#2ECC71"><div class="n" style="background:#2ECC71">3</div><h2>配色方案</h2></div>
+<p style="font-size:15px">配色方案是将理论和情感落地为实际设计的关键步骤。</p>
+
+<h3 id="s3-1">3.1 单色配色（Monochromatic）</h3>
+<p>一种色相，通过改变明度和饱和度创造层次。<b>最安全、最和谐。</b></p>
+<div class="pc"><div class="ph"><h4>🔵 沉静蓝</h4><span class="et" style="background:#E3F2FD;color:#1565C0">信任·稳重·专业</span></div>
+<div class="pcl"><div style="background:#0D47A1">#0D47A1</div><div style="background:#1976D2">#1976D2</div><div style="background:#42A5F5">#42A5F5</div><div style="background:#90CAF9">#90CAF9</div><div style="background:#BBDEFB">#BBDEFB</div></div>
+<div class="pd"><b>情感：</b>从深蓝到浅蓝，传递从「权威」到「友好」的过渡。<b>场景：</b>金融App、企业官网、SaaS产品。<b>比例：</b>深20%·主40%·中20%·浅20%</div></div>
+
+<div class="pc"><div class="ph"><h4>🟢 生机绿</h4><span class="et" style="background:#E8F5E9;color:#2E7D32">自然·安全·生机</span></div>
+<div class="pcl"><div style="background:#1B5E20">#1B5E20</div><div style="background:#388E3C">#388E3C</div><div style="background:#66BB6A">#66BB6A</div><div style="background:#A5D6A7">#A5D6A7</div><div style="background:#C8E6C9">#C8E6C9</div></div>
+<div class="pd"><b>情感：</b>绿色天然传递健康安全感。深绿稳重可靠，浅绿清新治愈。<b>场景：</b>健康App、有机食品、环保品牌</div></div>
+
+<h3 id="s3-2">3.2 邻近色配色（Analogous）</h3>
+<p>色相环上<b>相邻2~4种颜色</b>，自然和谐。</p>
+<div class="pc"><div class="ph"><h4>🌅 暖阳落日</h4><span class="et" style="background:#FFF3E0;color:#E65100">温暖·活力·食欲</span></div>
+<div class="pcl"><div style="background:#D32F2F">#D32F2F</div><div style="background:#FF5722">#FF5722</div><div style="background:#FF9800">#FF9800</div><div style="background:#FFC107">#FFC107</div><div style="background:#FFEB3B;color:#333;text-shadow:none">#FFEB3B</div></div>
+<div class="pd"><b>情感：</b>红→橙→黄暖色渐变像落日，传递热情、友好和食欲，让人感到幸福和能量。<br><b>场景：</b>美食外卖App、旅行平台、秋季促销。<b>原理：</b>暖色系最能吸引注意力并引发食欲。</div></div>
+
+<div class="pc"><div class="ph"><h4>🌊 海洋微风</h4><span class="et" style="background:#E0F7FA;color:#00695C">清新·冷静·理性</span></div>
+<div class="pcl"><div style="background:#00695C">#00695C</div><div style="background:#00897B">#00897B</div><div style="background:#26A69A">#26A69A</div><div style="background:#4DD0E1">#4DD0E1</div><div style="background:#80DEEA">#80DEEA</div></div>
+<div class="pd"><b>情感：</b>青→蓝绿冷色邻近像海面般宁静，传递理性、专注和清新感。<br><b>场景：</b>冥想App、医疗健康、夏季主题。<b>原理：</b>冷色系降低心率缓解焦虑。</div></div>
+
+<h3 id="s3-3">3.3 互补色配色（Complementary）</h3>
+<p>色相环<b>正对面</b>两种颜色(180°)，对比最强烈。</p>
+<div class="pc"><div class="ph"><h4>⚡ 活力撞色</h4><span class="et" style="background:#FCE4EC;color:#C62828">冲击·活力·大胆</span></div>
+<div class="pcl"><div style="background:#C62828">#C62828</div><div style="background:#EF5350">#EF5350</div><div style="background:#F5F5F5;color:#333;text-shadow:none">#F5F5F5</div><div style="background:#26A69A">#26A69A</div><div style="background:#00796B">#00796B</div></div>
+<div class="pd"><b>情感：</b>红与青绿强烈对比，传递冲击力和行动力。中间用白色缓冲避免刺眼。<br><b>场景：</b>运动品牌、限时促销、圣诞主题。<b>技巧：</b>主色70%+互补色10~20%+中性色填充。</div></div>
+
+<div class="pc"><div class="ph"><h4>💎 蓝橙经典</h4><span class="et" style="background:#E3F2FD;color:#1565C0">专业·创新·活力</span></div>
+<div class="pcl"><div style="background:#1565C0">#1565C0</div><div style="background:#42A5F5">#42A5F5</div><div style="background:#ECEFF1;color:#333;text-shadow:none">#ECEFF1</div><div style="background:#FF9800">#FF9800</div><div style="background:#E65100">#E65100</div></div>
+<div class="pd"><b>情感：</b>蓝色传递信任专业，橙色注入活力创新。最经典的互补色组合。<br><b>场景：</b>科技公司、创新产品、Firefox。<b>原理：</b>蓝色建立信任基础，橙色CTA在蓝色背景上极醒目。</div></div>
+
+<h3 id="s3-4">3.4 分裂互补色（Split-Complementary）</h3>
+<p>选一种颜色，使用其互补色<b>两侧的颜色</b>。既有对比又不太激烈。</p>
+<div class="pc"><div class="ph"><h4>🎭 优雅戏剧</h4><span class="et" style="background:#F3E5F5;color:#6A1B9A">高级·个性·艺术</span></div>
+<div class="pcl"><div style="background:#6A1B9A">#6A1B9A</div><div style="background:#AB47BC">#AB47BC</div><div style="background:#F5F5F5;color:#333;text-shadow:none">#F5F5F5</div><div style="background:#FFB74D">#FFB74D</div><div style="background:#81C784">#81C784</div></div>
+<div class="pd"><b>情感：</b>紫色传递高级感，橙和绿提供活力点缀，整体「有品味但不沉闷」。<br><b>场景：</b>美妆品牌、创意工作室、艺术展览。<b>优势：</b>比纯互补柔和，比邻近色有趣，最容易用好的对比方案。</div></div>
+
+<h3 id="s3-5">3.5 三角配色（Triadic）</h3>
+<p>色相环等距120°的三种颜色。平衡、丰富、有张力。</p>
+<div class="pc"><div class="ph"><h4>🎪 缤纷活力</h4><span class="et" style="background:#FFF9C4;color:#F57F17">欢乐·多元·年轻</span></div>
+<div class="pcl"><div style="background:#E53935">#E53935</div><div style="background:#FDD835;color:#333;text-shadow:none">#FDD835</div><div style="background:#1E88E5">#1E88E5</div><div style="background:#F5F5F5;color:#333;text-shadow:none">#F5F5F5</div><div style="background:#424242">#424242</div></div>
+<div class="pd"><b>情感：</b>红-黄-蓝三原色组合，传递快乐、童趣、多元化。<br><b>场景：</b>儿童教育、Google风格设计、活动海报。<b>技巧：</b>一种主色60%+其余两种分担40%。</div></div>
+
+<div class="pc"><div class="ph"><h4>🌈 柔和三角</h4><span class="et" style="background:#F3E5F5;color:#7B1FA2">舒适·浪漫·平衡</span></div>
+<div class="pcl"><div style="background:#E57373">#E57373</div><div style="background:#AED581">#AED581</div><div style="background:#9575CD">#9575CD</div><div style="background:#FFF8E1;color:#333;text-shadow:none">#FFF8E1</div><div style="background:#FAFAFA;color:#333;text-shadow:none">#FAFAFA</div></div>
+<div class="pd"><b>情感：</b>降低饱和度后从激烈变温柔。柔粉+浅绿+薰衣草紫传递舒适、浪漫、文艺。<br><b>场景：</b>母婴、花店、甜品店、婚礼策划。<b>关键：</b>S降到40%~60%就能让三角配色变温柔。</div></div>
+
+<h3 id="s3-6">3.6 四角配色（Tetradic）</h3>
+<p>色相环组成矩形的四种颜色（两对互补色）。最丰富但最难驾驭。</p>
+<div class="pc"><div class="ph"><h4>🏄 活力四射</h4><span class="et" style="background:#E8F5E9;color:#2E7D32">多元·活力·创新</span></div>
+<div class="pcl"><div style="background:#E53935">#E53935</div><div style="background:#43A047">#43A047</div><div style="background:#1E88E5">#1E88E5</div><div style="background:#FB8C00">#FB8C00</div><div style="background:#FAFAFA;color:#333;text-shadow:none">#FAFAFA</div></div>
+<div class="pd"><b>情感：</b>红-绿+蓝-橙两对互补色，传递多元化、活力、创新、勇敢。<br><b>场景：</b>Google风格、儿童产品、创意平台。<b>核心：</b>选一种做绝对主色50%+，加入大量白/灰缓冲。</div></div>
+
+<h3 id="s3-7">3.7 情感 → 配色方案速查表</h3>
+<p><b>这是最实用的部分：当你知道要表达什么情感，直接查此表找到配色方案。</b></p>
+<table>
+<thead><tr><th>想表达的情感</th><th>推荐配色方案</th><th>色值参考</th><th>配色技巧</th></tr></thead>
+<tbody>
+<tr><td><b>🔥 热情/促销</b></td><td>暖色邻近 or 红色单色</td><td><span class="ms" style="background:#FF1744"></span><span class="ms" style="background:#FF5722"></span><span class="ms" style="background:#FF9800"></span><span class="ms" style="background:#FFC107"></span></td><td>高饱和度S>80%，大面积暖色</td></tr>
+<tr><td><b>💎 高端/奢华</b></td><td>暗色单色 + 金色点缀</td><td><span class="ms" style="background:#1A1A2E"></span><span class="ms" style="background:#16213E"></span><span class="ms" style="background:#C9A84C"></span><span class="ms" style="background:#F5F5F5"></span></td><td>低明度B<30%为主，金/白点缀</td></tr>
+<tr><td><b>🏢 专业/信任</b></td><td>蓝色单色 or 蓝+灰</td><td><span class="ms" style="background:#0D47A1"></span><span class="ms" style="background:#1976D2"></span><span class="ms" style="background:#90CAF9"></span><span class="ms" style="background:#ECEFF1"></span></td><td>蓝色60%+，搭配灰白，简洁克制</td></tr>
+<tr><td><b>🌿 自然/健康</b></td><td>绿色邻近色</td><td><span class="ms" style="background:#2E7D32"></span><span class="ms" style="background:#66BB6A"></span><span class="ms" style="background:#AED581"></span><span class="ms" style="background:#F1F8E9"></span></td><td>中等S:50%~70%，搭配米白</td></tr>
+<tr><td><b>🍼 温柔/治愈</b></td><td>低饱和高明度多色</td><td><span class="ms" style="background:#F8BBD0"></span><span class="ms" style="background:#B3E5FC"></span><span class="ms" style="background:#DCEDC8"></span><span class="ms" style="background:#FFF9C4"></span></td><td>S<35% B>80%，粉彩系</td></tr>
+<tr><td><b>🎨 创意/艺术</b></td><td>分裂互补 or 三角</td><td><span class="ms" style="background:#7B1FA2"></span><span class="ms" style="background:#FF6F00"></span><span class="ms" style="background:#00BFA5"></span><span class="ms" style="background:#FAFAFA"></span></td><td>大胆用色，控制面积比</td></tr>
+<tr><td><b>🌙 神秘/高级</b></td><td>深紫/深蓝单色调</td><td><span class="ms" style="background:#1A0033"></span><span class="ms" style="background:#4A148C"></span><span class="ms" style="background:#7C4DFF"></span><span class="ms" style="background:#EDE7F6"></span></td><td>暗色背景+渐变+荧光点缀</td></tr>
+<tr><td><b>☀️ 乐观/年轻</b></td><td>高饱和暖色三角</td><td><span class="ms" style="background:#FFEB3B"></span><span class="ms" style="background:#FF5252"></span><span class="ms" style="background:#448AFF"></span><span class="ms" style="background:#fff;border:1px solid #ddd"></span></td><td>高S>70% 高B>80%，白色背景</td></tr>
+<tr><td><b>📖 文艺/复古</b></td><td>低饱和浊色调邻近</td><td><span class="ms" style="background:#8D6E63"></span><span class="ms" style="background:#A1887F"></span><span class="ms" style="background:#BCAAA4"></span><span class="ms" style="background:#D7CCC8"></span></td><td>S<30% B:40%~65%，棕/米/灰</td></tr>
+<tr><td><b>⚡ 科技/未来</b></td><td>深色底 + 荧光点缀</td><td><span class="ms" style="background:#0A0E27"></span><span class="ms" style="background:#00E5FF"></span><span class="ms" style="background:#76FF03"></span><span class="ms" style="background:#7C4DFF"></span></td><td>深色B<15%为底，荧光S/B:100%</td></tr>
+</tbody>
+</table>
+
+<div class="tip k"><strong>🔑 配色黄金法则：6-3-1 原则</strong>
+<b>60%</b> — 主色（定调，通常是背景或大面积色块）<br>
+<b>30%</b> — 辅助色（支撑，营造丰富度）<br>
+<b>10%</b> — 强调色（点睛，引导注意力）<br>
+无论哪种配色方案都遵循此比例，源于室内设计，在UI中同样有效。
+</div>
+<div class="vb"><canvas id="c8" width="680" height="160"></canvas><div class="cap">6:3:1 配色比例示意图</div></div>
+</div>
+
+<!-- PART 4: 产品配色完整流程 -->
+<div class="sec" id="p4">
+<div class="sh" style="border-color:#FF9800"><div class="n" style="background:#FF9800">4</div><h2>产品配色完整流程</h2></div>
+<p style="font-size:15px">从「我要做什么产品」到「最终确定色值」的<b>标准化6步流程</b>。每一步都不可逆，前一步决定后一步的范围。</p>
+
+<!-- 流程图 -->
+<div class="vb" style="padding:32px 16px">
+<div style="max-width:720px;margin:0 auto;text-align:left">
+<!-- Step 1 -->
+<div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:8px">
+<div style="min-width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#FF6B6B,#ee5a24);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;flex-shrink:0;box-shadow:0 4px 12px rgba(238,90,36,.3)">1</div>
+<div style="flex:1;background:#fff;border-radius:12px;padding:20px;border:2px solid #FFCDD2;box-shadow:0 2px 8px rgba(0,0,0,.04)">
+<h4 style="margin:0 0 8px;color:#D32F2F;font-size:16px">🎭 定产品性格 & 品牌调性</h4>
+<p style="margin:0 0 10px;font-size:13px;color:#555">产品想给用户传递什么感觉？这是所有颜色决策的起点。</p>
+<div style="display:flex;flex-wrap:wrap;gap:6px">
+<span style="padding:4px 12px;border-radius:16px;font-size:12px;background:#FFEBEE;color:#C62828">温柔治愈</span>
+<span style="padding:4px 12px;border-radius:16px;font-size:12px;background:#E3F2FD;color:#1565C0">理性专业</span>
+<span style="padding:4px 12px;border-radius:16px;font-size:12px;background:#FFF3E0;color:#E65100">年轻潮流</span>
+<span style="padding:4px 12px;border-radius:16px;font-size:12px;background:#F3E5F5;color:#6A1B9A">高端极简</span>
+<span style="padding:4px 12px;border-radius:16px;font-size:12px;background:#E0F7FA;color:#00695C">科技冰冷</span>
+<span style="padding:4px 12px;border-radius:16px;font-size:12px;background:#FFF9C4;color:#F57F17">活泼童趣</span>
+<span style="padding:4px 12px;border-radius:16px;font-size:12px;background:#ECEFF1;color:#37474F">专业严肃</span>
+</div>
+<p style="margin:8px 0 0;font-size:12px;color:#999">→ 这一步决定了你的<b>情绪颜色方向</b></p>
+</div>
+</div>
+<div style="text-align:center;margin:4px 0 4px 24px;color:#ccc;font-size:20px">↓</div>
+
+<!-- Step 2 -->
+<div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:8px">
+<div style="min-width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#FF9800,#f39c12);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;flex-shrink:0;box-shadow:0 4px 12px rgba(243,156,18,.3)">2</div>
+<div style="flex:1;background:#fff;border-radius:12px;padding:20px;border:2px solid #FFE0B2;box-shadow:0 2px 8px rgba(0,0,0,.04)">
+<h4 style="margin:0 0 8px;color:#E65100;font-size:16px">🎨 根据性格锁定【主色调】</h4>
+<p style="margin:0 0 10px;font-size:13px;color:#555">主色调是产品的「视觉DNA」，90%的色彩面积由它决定。</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px">
+<div style="text-align:center;padding:10px;border-radius:8px;background:#E3F2FD"><span style="display:inline-block;width:32px;height:32px;border-radius:50%;background:#1976D2;margin-bottom:4px"></span><div style="font-size:11px;color:#555">理性蓝</div></div>
+<div style="text-align:center;padding:10px;border-radius:8px;background:#FFF3E0"><span style="display:inline-block;width:32px;height:32px;border-radius:50%;background:#FF9800;margin-bottom:4px"></span><div style="font-size:11px;color:#555">温暖橙</div></div>
+<div style="text-align:center;padding:10px;border-radius:8px;background:#E8F5E9"><span style="display:inline-block;width:32px;height:32px;border-radius:50%;background:#43A047;margin-bottom:4px"></span><div style="font-size:11px;color:#555">健康绿</div></div>
+<div style="text-align:center;padding:10px;border-radius:8px;background:#F3E5F5"><span style="display:inline-block;width:32px;height:32px;border-radius:50%;background:#7B1FA2;margin-bottom:4px"></span><div style="font-size:11px;color:#555">高贵紫</div></div>
+<div style="text-align:center;padding:10px;border-radius:8px;background:#ECEFF1"><span style="display:inline-block;width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#222,#999);margin-bottom:4px"></span><div style="font-size:11px;color:#555">极简黑白灰</div></div>
+<div style="text-align:center;padding:10px;border-radius:8px;background:#FFEBEE"><span style="display:inline-block;width:32px;height:32px;border-radius:50%;background:#E53935;margin-bottom:4px"></span><div style="font-size:11px;color:#555">活力红</div></div>
+</div>
+<p style="margin:8px 0 0;font-size:12px;color:#999">→ 全产品 <b>90% 面积</b>都由主色调决定</p>
+</div>
+</div>
+<div style="text-align:center;margin:4px 0 4px 24px;color:#ccc;font-size:20px">↓</div>
+
+<!-- Step 3 -->
+<div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:8px">
+<div style="min-width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#FFEB3B,#f1c40f);color:#333;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;flex-shrink:0;box-shadow:0 4px 12px rgba(241,196,15,.3)">3</div>
+<div style="flex:1;background:#fff;border-radius:12px;padding:20px;border:2px solid #FFF9C4;box-shadow:0 2px 8px rgba(0,0,0,.04)">
+<h4 style="margin:0 0 8px;color:#F57F17;font-size:16px">🧩 根据使用场景选配色方案</h4>
+<p style="margin:0 0 10px;font-size:13px;color:#555">不同的视觉需求对应不同的配色策略：</p>
+<table style="margin:0;font-size:12px">
+<thead><tr><th style="padding:6px 10px">场景</th><th style="padding:6px 10px">推荐方案</th><th style="padding:6px 10px">原因</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 10px">长时间浏览、信息密集</td><td style="padding:6px 10px"><b>单色 / 邻近色</b></td><td style="padding:6px 10px">柔和不刺眼，阅读舒适</td></tr>
+<tr><td style="padding:6px 10px">按钮强调、引导点击</td><td style="padding:6px 10px"><b>分裂互补色</b></td><td style="padding:6px 10px">有对比但不失和谐</td></tr>
+<tr><td style="padding:6px 10px">活动Banner、弹窗吸睛</td><td style="padding:6px 10px"><b>互补色</b></td><td style="padding:6px 10px">最大冲击力抓眼球</td></tr>
+<tr><td style="padding:6px 10px">品牌形象、启动页</td><td style="padding:6px 10px"><b>三角 / 四角</b></td><td style="padding:6px 10px">丰富多彩传递品牌活力</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div style="text-align:center;margin:4px 0 4px 24px;color:#ccc;font-size:20px">↓</div>
+
+<!-- Step 4 -->
+<div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:8px">
+<div style="min-width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#66BB6A,#27ae60);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;flex-shrink:0;box-shadow:0 4px 12px rgba(39,174,96,.3)">4</div>
+<div style="flex:1;background:#fff;border-radius:12px;padding:20px;border:2px solid #C8E6C9;box-shadow:0 2px 8px rgba(0,0,0,.04)">
+<h4 style="margin:0 0 8px;color:#2E7D32;font-size:16px">⚖️ 定色彩比例（6:3:1 黄金法则）</h4>
+<div style="display:flex;height:40px;border-radius:8px;overflow:hidden;margin:8px 0">
+<div style="flex:6;background:#1976D2;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:600">60% 主色</div>
+<div style="flex:3;background:#90CAF9;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:600">30% 辅色</div>
+<div style="flex:1;background:#FF9800;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:600">10%</div>
+</div>
+<p style="margin:4px 0 0;font-size:12px;color:#555"><b>60%</b> 背景/大面积底色 · <b>30%</b> 模块/卡片/次级元素 · <b>10%</b> 按钮/提示/重点信息</p>
+</div>
+</div>
+<div style="text-align:center;margin:4px 0 4px 24px;color:#ccc;font-size:20px">↓</div>
+
+<!-- Step 5 -->
+<div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:8px">
+<div style="min-width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#42A5F5,#2980b9);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;flex-shrink:0;box-shadow:0 4px 12px rgba(41,128,185,.3)">5</div>
+<div style="flex:1;background:#fff;border-radius:12px;padding:20px;border:2px solid #BBDEFB;box-shadow:0 2px 8px rgba(0,0,0,.04)">
+<h4 style="margin:0 0 8px;color:#1565C0;font-size:16px">🎚️ 统一明度、饱和度</h4>
+<p style="margin:0 0 8px;font-size:13px;color:#555">这是「看起来高级」还是「看起来廉价」的分水岭。</p>
+<div style="display:flex;gap:12px;flex-wrap:wrap">
+<div style="flex:1;min-width:180px;padding:12px;border-radius:8px;background:#FFEBEE">
+<p style="margin:0;font-size:12px;color:#C62828"><b>❌ 统一前</b></p>
+<div style="display:flex;gap:4px;margin-top:6px">
+<span style="width:36px;height:36px;border-radius:6px;display:block;background:hsl(210,100%,50%)"></span>
+<span style="width:36px;height:36px;border-radius:6px;display:block;background:hsl(40,30%,70%)"></span>
+<span style="width:36px;height:36px;border-radius:6px;display:block;background:hsl(120,90%,35%)"></span>
+</div>
+<p style="margin:4px 0 0;font-size:11px;color:#999">饱和度忽高忽低，看着杂乱</p>
+</div>
+<div style="flex:1;min-width:180px;padding:12px;border-radius:8px;background:#E8F5E9">
+<p style="margin:0;font-size:12px;color:#2E7D32"><b>✅ 统一后</b></p>
+<div style="display:flex;gap:4px;margin-top:6px">
+<span style="width:36px;height:36px;border-radius:6px;display:block;background:hsl(210,55%,55%)"></span>
+<span style="width:36px;height:36px;border-radius:6px;display:block;background:hsl(40,55%,55%)"></span>
+<span style="width:36px;height:36px;border-radius:6px;display:block;background:hsl(120,55%,55%)"></span>
+</div>
+<p style="margin:4px 0 0;font-size:11px;color:#999">统一到 S:55% B:55%，高级感上来了</p>
+</div>
+</div>
+</div>
+</div>
+<div style="text-align:center;margin:4px 0 4px 24px;color:#ccc;font-size:20px">↓</div>
+
+<!-- Step 6 -->
+<div style="display:flex;gap:16px;align-items:flex-start">
+<div style="min-width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#AB47BC,#8e44ad);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;flex-shrink:0;box-shadow:0 4px 12px rgba(142,68,173,.3)">6</div>
+<div style="flex:1;background:#fff;border-radius:12px;padding:20px;border:2px solid #E1BEE7;box-shadow:0 2px 8px rgba(0,0,0,.04)">
+<h4 style="margin:0 0 8px;color:#7B1FA2;font-size:16px">♿ 适配可用性规范</h4>
+<p style="margin:0 0 8px;font-size:13px;color:#555">最后一步确保所有用户都能舒适使用你的产品：</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px">
+<div style="padding:8px 12px;border-radius:6px;background:#f8f9fa"><b>📏 对比度达标</b><br>文字 vs 背景 ≥ 4.5:1 (WCAG AA)</div>
+<div style="padding:8px 12px;border-radius:6px;background:#f8f9fa"><b>🌓 深浅模式</b><br>Light/Dark 两套色值适配</div>
+<div style="padding:8px 12px;border-radius:6px;background:#f8f9fa"><b>👁️ 色盲友好</b><br>不仅靠颜色区分，增加图标/文字</div>
+<div style="padding:8px 12px;border-radius:6px;background:#f8f9fa"><b>🌙 夜间不刺眼</b><br>暗色模式降低亮度和饱和度</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="tip w"><strong>⚠️ 重要原则：这6步是从上到下不可逆的</strong>
+先定性格，再选主色，再定方案。不要跳步！跳步 = 反复返工。<br>
+如果第五步发现颜色不协调，只能在<b>当前步骤内</b>调整S和B，不能回头改主色或配色方案。
+</div>
+
+<!-- 实战举例 -->
+<h3 id="s4-ex" style="margin-top:36px">实战举例：为一个健康饮食App配色</h3>
+<div style="background:#f8f9fa;border-radius:12px;padding:24px;margin:16px 0;border:1px solid #e8e8e8">
+<div style="display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:start">
+<div style="width:36px;height:36px;border-radius:50%;background:#ee5a24;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px">1</div>
+<div><b>定性格：</b>自然、健康、温暖、让人信赖</div>
+<div style="width:36px;height:36px;border-radius:50%;background:#f39c12;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px">2</div>
+<div><b>锁主色：</b>健康绿 (H=120°~140°)<div style="display:flex;gap:4px;margin-top:6px"><span style="display:block;width:32px;height:32px;border-radius:6px;background:#43A047"></span><span style="display:block;width:32px;height:32px;border-radius:6px;background:#66BB6A"></span><span style="display:block;width:32px;height:32px;border-radius:6px;background:#A5D6A7"></span></div></div>
+<div style="width:36px;height:36px;border-radius:50%;background:#f1c40f;color:#333;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px">3</div>
+<div><b>选方案：</b>用户长时间浏览菜谱 → <b>邻近色</b>（绿→黄绿→浅黄），搭配橙色做CTA按钮</div>
+<div style="width:36px;height:36px;border-radius:50%;background:#27ae60;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px">4</div>
+<div><b>定比例：</b>60%白色底+浅绿背景 · 30%绿色模块/卡片 · 10%橙色按钮<div style="display:flex;height:24px;border-radius:6px;overflow:hidden;margin-top:6px;max-width:300px"><div style="flex:6;background:#E8F5E9"></div><div style="flex:3;background:#66BB6A"></div><div style="flex:1;background:#FF9800"></div></div></div>
+<div style="width:36px;height:36px;border-radius:50%;background:#2980b9;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px">5</div>
+<div><b>统一S/B：</b>所有绿色统一到 S:55%~65% B:60%~75%，橙色点缀 S:80% B:90%</div>
+<div style="width:36px;height:36px;border-radius:50%;background:#8e44ad;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px">6</div>
+<div><b>可用性：</b>正文用深灰#333而非纯黑，对比度5.8:1达标；绿/红不做唯一区分方式</div>
+</div>
+</div>
+</div>
+
+<!-- PART 5: 品牌案例分析 -->
+<div class="sec" id="p5">
+<div class="sh" style="border-color:#9C27B0"><div class="n" style="background:#9C27B0">5</div><h2>品牌配色案例分析</h2></div>
+<p style="font-size:15px">理论终究要落地。下面用真实品牌的配色来<b>逆向分析</b>：它们用了什么方案、传递了什么情感、为什么有效。看完你就能举一反三。</p>
+
+<!-- 案例1: 微信 -->
+<h3 id="s5-1">案例 1：微信 WeChat</h3>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:16px 0">
+<div>
+<!-- 模拟微信App界面 -->
+<div style="border-radius:16px;overflow:hidden;border:1px solid #e0e0e0;box-shadow:0 4px 16px rgba(0,0,0,.1);margin-bottom:12px;max-width:320px">
+<!-- 顶部状态栏 -->
+<div style="background:#EDEDED;padding:8px 16px;display:flex;justify-content:space-between;align-items:center;font-size:10px;color:#333">
+<span>9:41</span>
+<div style="display:flex;gap:4px;align-items:center"><span>📶</span><span>🔋</span></div>
+</div>
+<!-- 导航栏 -->
+<div style="background:#EDEDED;padding:8px 16px 10px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #d6d6d6">
+<span style="font-size:11px;color:#576B95">+</span>
+<span style="font-size:16px;font-weight:600;color:#000">微信</span>
+<span style="font-size:11px;color:#576B95">🔍</span>
+</div>
+<!-- 聊天列表 -->
+<div style="background:#fff">
+<div style="display:flex;gap:10px;padding:12px 16px;align-items:center;border-bottom:1px solid #f0f0f0">
+<div style="width:44px;height:44px;border-radius:6px;background:#07C160;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;flex-shrink:0">文</div>
+<div style="flex:1;min-width:0"><div style="display:flex;justify-content:space-between"><span style="font-size:14px;color:#111;font-weight:500">文件传输助手</span><span style="font-size:10px;color:#999">昨天</span></div><div style="font-size:12px;color:#999;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px">[文件] 颜色设计-完整指南.html</div></div>
+</div>
+<div style="display:flex;gap:10px;padding:12px 16px;align-items:center;border-bottom:1px solid #f0f0f0">
+<div style="width:44px;height:44px;border-radius:6px;background:#FA9D3B;display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;flex-shrink:0">👥</div>
+<div style="flex:1;min-width:0"><div style="display:flex;justify-content:space-between"><span style="font-size:14px;color:#111;font-weight:500">UI设计学习群</span><span style="font-size:10px;color:#999">10:32</span></div><div style="font-size:12px;color:#999;margin-top:2px">小王: 这个配色方案不错👍</div></div>
+</div>
+<div style="display:flex;gap:10px;padding:12px 16px;align-items:center;border-bottom:1px solid #f0f0f0">
+<div style="width:44px;height:44px;border-radius:6px;background:#E8E8E8;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🔔</div>
+<div style="flex:1;min-width:0"><div style="display:flex;justify-content:space-between"><span style="font-size:14px;color:#111;font-weight:500">订阅号消息</span><span style="font-size:10px;color:#999">09:15</span></div><div style="font-size:12px;color:#999;margin-top:2px">设计日报: 2026年UI色彩趋势</div></div>
+</div>
+</div>
+<!-- 底部Tab栏 -->
+<div style="background:#F7F7F7;display:flex;border-top:1px solid #e0e0e0">
+<div style="flex:1;text-align:center;padding:6px 0"><div style="font-size:18px">💬</div><div style="font-size:9px;color:#07C160;font-weight:600">微信</div></div>
+<div style="flex:1;text-align:center;padding:6px 0"><div style="font-size:18px">📞</div><div style="font-size:9px;color:#999">通讯录</div></div>
+<div style="flex:1;text-align:center;padding:6px 0"><div style="font-size:18px">🔍</div><div style="font-size:9px;color:#999">发现</div></div>
+<div style="flex:1;text-align:center;padding:6px 0"><div style="font-size:18px">👤</div><div style="font-size:9px;color:#999">我</div></div>
+</div>
+</div>
+<!-- 色值条 -->
+<div style="display:flex;height:36px;border-radius:8px;overflow:hidden;margin-top:8px">
+<div style="flex:6;background:#07C160;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px">#07C160</div>
+<div style="flex:2;background:#F7F7F7;display:flex;align-items:center;justify-content:center;color:#333;font-size:11px">#F7F7F7</div>
+<div style="flex:1;background:#576B95;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px">#576B95</div>
+<div style="flex:1;background:#333333;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px">#333</div>
+</div>
+</div>
+<div style="font-size:13px;color:#555">
+<p><b>🎨 配色方案：</b>绿色单色 + 灰白辅助</p>
+<p><b>🎭 情感传递：</b></p>
+<ul style="padding-left:20px;margin:6px 0;line-height:2">
+<li><b>绿色(#07C160)</b>：安全、值得信赖、生命力 —— 让人放心进行聊天和支付</li>
+<li><b>大面积白灰</b>：简洁、不打扰 —— 长时间使用不疲劳</li>
+<li><b>蓝色链接(#576B95)</b>：信息层次引导</li>
+</ul>
+<p><b>📐 分析：</b>单色配色，S/B克制（S:97% B:76%），不用高饱和荧光绿。大量留白让界面呼吸感极强。这就是「长时间使用场景 → 单色方案」的教科书案例。</p>
+</div>
+</div>
+
+<!-- 案例2: 淘宝 -->
+<h3 id="s5-2">案例 2：淘宝 Taobao</h3>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:16px 0">
+<div>
+<!-- 模拟淘宝App界面 -->
+<div style="border-radius:16px;overflow:hidden;border:1px solid #e0e0e0;box-shadow:0 4px 16px rgba(0,0,0,.1);margin-bottom:12px;max-width:320px">
+<!-- 顶部状态栏 -->
+<div style="background:linear-gradient(to right,#FF5000,#FF6A00);padding:8px 16px;display:flex;justify-content:space-between;align-items:center;font-size:10px;color:rgba(255,255,255,.8)">
+<span>9:41</span>
+<div style="display:flex;gap:4px;align-items:center"><span>📶</span><span>🔋</span></div>
+</div>
+<!-- 搜索栏 -->
+<div style="background:linear-gradient(to right,#FF5000,#FF6A00);padding:4px 12px 12px;display:flex;gap:8px;align-items:center">
+<div style="flex:1;background:rgba(255,255,255,.95);border-radius:18px;padding:6px 14px;display:flex;align-items:center;gap:6px">
+<span style="font-size:12px;color:#FF5000">🔍</span>
+<span style="font-size:12px;color:#999">iPhone 16 Pro</span>
+</div>
+<span style="font-size:12px;color:#fff;flex-shrink:0">📷</span>
+</div>
+<!-- 分类导航 -->
+<div style="background:#fff;display:flex;padding:12px 8px;gap:2px">
+<div style="flex:1;text-align:center"><div style="font-size:20px">👗</div><div style="font-size:9px;color:#333;margin-top:2px">女装</div></div>
+<div style="flex:1;text-align:center"><div style="font-size:20px">📱</div><div style="font-size:9px;color:#333;margin-top:2px">数码</div></div>
+<div style="flex:1;text-align:center"><div style="font-size:20px">🏠</div><div style="font-size:9px;color:#333;margin-top:2px">家居</div></div>
+<div style="flex:1;text-align:center"><div style="font-size:20px">🍎</div><div style="font-size:9px;color:#333;margin-top:2px">生鲜</div></div>
+<div style="flex:1;text-align:center"><div style="font-size:20px">💄</div><div style="font-size:9px;color:#333;margin-top:2px">美妆</div></div>
+</div>
+<!-- Banner区域 -->
+<div style="margin:0 12px;border-radius:8px;overflow:hidden;background:linear-gradient(135deg,#FF2D2D,#FF6A00);padding:16px;color:#fff;position:relative">
+<div style="font-size:16px;font-weight:700">限时秒杀</div>
+<div style="font-size:10px;margin-top:2px;opacity:.9">倒计时 02:15:36</div>
+<div style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.95);color:#FF2D2D;padding:4px 12px;border-radius:12px;font-size:11px;font-weight:700">GO ></div>
+</div>
+<!-- 商品列表 -->
+<div style="display:flex;gap:6px;padding:10px 12px">
+<div style="flex:1;background:#f5f5f5;border-radius:6px;overflow:hidden">
+<div style="height:70px;background:linear-gradient(135deg,#f0e6dc,#e8d8cc)"></div>
+<div style="padding:6px"><div style="font-size:10px;color:#333;line-height:1.3">新款运动鞋透气...</div><div style="font-size:13px;color:#FF2D2D;font-weight:700;margin-top:2px">¥89</div></div>
+</div>
+<div style="flex:1;background:#f5f5f5;border-radius:6px;overflow:hidden">
+<div style="height:70px;background:linear-gradient(135deg,#dce8f0,#c8d8e4)"></div>
+<div style="padding:6px"><div style="font-size:10px;color:#333;line-height:1.3">无线蓝牙耳机...</div><div style="font-size:13px;color:#FF2D2D;font-weight:700;margin-top:2px">¥59</div></div>
+</div>
+</div>
+<!-- 底部Tab栏 -->
+<div style="background:#fff;display:flex;border-top:1px solid #eee">
+<div style="flex:1;text-align:center;padding:6px 0"><div style="font-size:16px">🏠</div><div style="font-size:9px;color:#FF5000;font-weight:600">首页</div></div>
+<div style="flex:1;text-align:center;padding:6px 0"><div style="font-size:16px">🛒</div><div style="font-size:9px;color:#999">购物车</div></div>
+<div style="flex:1;text-align:center;padding:6px 0"><div style="font-size:16px">💬</div><div style="font-size:9px;color:#999">消息</div></div>
+<div style="flex:1;text-align:center;padding:6px 0"><div style="font-size:16px">👤</div><div style="font-size:9px;color:#999">我的</div></div>
+</div>
+</div>
+<!-- 色值条 -->
+<div style="display:flex;height:36px;border-radius:8px;overflow:hidden;margin-top:8px">
+<div style="flex:5;background:#FF5000;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px">#FF5000</div>
+<div style="flex:2;background:#FF7200;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px">#FF7200</div>
+<div style="flex:2;background:#FFFFFF;display:flex;align-items:center;justify-content:center;color:#333;font-size:11px;border:1px solid #eee">#FFF</div>
+<div style="flex:1;background:#FF2D2D;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px">#FF2D2D</div>
+</div>
+</div>
+<div style="font-size:13px;color:#555">
+<p><b>🎨 配色方案：</b>暖色邻近色（红→橙）</p>
+<p><b>🎭 情感传递：</b></p>
+<ul style="padding-left:20px;margin:6px 0;line-height:2">
+<li><b>橙红(#FF5000)</b>：刺激购买欲、紧迫感、热情 —— 让你「想买买买」</li>
+<li><b>暖色渐变</b>：活力、热闹、节日氛围 —— 逛街的感觉</li>
+<li><b>红色强调</b>：「抢购」「秒杀」—— 最强行动力</li>
+</ul>
+<p><b>📐 分析：</b>暖色邻近色方案，高饱和度（S:100% B:100%）极大刺激购物欲。这是「促销/电商场景 → 暖色邻近色」的典型。为什么不用冷色？因为蓝色会让人冷静理性……理性的人不冲动消费 😄</p>
+</div>
+</div>
+
+<!-- 案例3: 支付宝 -->
+<h3 id="s5-3">案例 3：支付宝 Alipay</h3>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:16px 0">
+<div>
+<!-- 模拟支付宝App界面 -->
+<div style="border-radius:16px;overflow:hidden;border:1px solid #e0e0e0;box-shadow:0 4px 16px rgba(0,0,0,.1);margin-bottom:12px;max-width:320px">
+<!-- 顶部状态栏 -->
+<div style="background:#1677FF;padding:8px 16px;display:flex;justify-content:space-between;align-items:center;font-size:10px;color:rgba(255,255,255,.8)">
+<span>9:41</span>
+<div style="display:flex;gap:4px;align-items:center"><span>📶</span><span>🔋</span></div>
+</div>
+<!-- 搜索栏 -->
+<div style="background:#1677FF;padding:4px 12px 14px;display:flex;gap:8px;align-items:center">
+<div style="flex:1;background:rgba(255,255,255,.2);border-radius:18px;padding:7px 14px;display:flex;align-items:center;gap:6px">
+<span style="font-size:12px;color:rgba(255,255,255,.8)">🔍</span>
+<span style="font-size:12px;color:rgba(255,255,255,.6)">搜索</span>
+</div>
+<span style="font-size:12px;color:#fff;flex-shrink:0">➕</span>
+</div>
+<!-- 功能图标区域 -->
+<div style="background:#fff;display:grid;grid-template-columns:repeat(5,1fr);gap:2px;padding:16px 12px">
+<div style="text-align:center"><div style="width:36px;height:36px;margin:0 auto;border-radius:8px;background:#1677FF;display:flex;align-items:center;justify-content:center;font-size:16px">💳</div><div style="font-size:9px;color:#333;margin-top:4px">扫一扫</div></div>
+<div style="text-align:center"><div style="width:36px;height:36px;margin:0 auto;border-radius:8px;background:#1677FF;display:flex;align-items:center;justify-content:center;font-size:16px">💰</div><div style="font-size:9px;color:#333;margin-top:4px">收付款</div></div>
+<div style="text-align:center"><div style="width:36px;height:36px;margin:0 auto;border-radius:8px;background:#1677FF;display:flex;align-items:center;justify-content:center;font-size:16px">🚌</div><div style="font-size:9px;color:#333;margin-top:4px">出行</div></div>
+<div style="text-align:center"><div style="width:36px;height:36px;margin:0 auto;border-radius:8px;background:#1677FF;display:flex;align-items:center;justify-content:center;font-size:16px">📱</div><div style="font-size:9px;color:#333;margin-top:4px">充值中心</div></div>
+<div style="text-align:center"><div style="width:36px;height:36px;margin:0 auto;border-radius:8px;background:#FF6010;display:flex;align-items:center;justify-content:center;font-size:16px">🧧</div><div style="font-size:9px;color:#333;margin-top:4px">红包</div></div>
+</div>
+<!-- 理财区域 -->
+<div style="background:#F5F5F5;padding:8px 12px">
+<div style="background:#fff;border-radius:10px;padding:14px;margin-bottom:6px">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+<span style="font-size:14px;font-weight:600;color:#333">理财</span>
+<span style="font-size:11px;color:#999">更多 ></span>
+</div>
+<div style="display:flex;gap:10px">
+<div style="flex:1;background:#F0F7FF;border-radius:6px;padding:8px">
+<div style="font-size:10px;color:#666">余额宝</div>
+<div style="font-size:14px;font-weight:700;color:#1677FF;margin-top:2px">1.76%</div>
+<div style="font-size:9px;color:#999;margin-top:2px">7日年化</div>
+</div>
+<div style="flex:1;background:#FFF7F0;border-radius:6px;padding:8px">
+<div style="font-size:10px;color:#666">基金</div>
+<div style="font-size:14px;font-weight:700;color:#FF6010;margin-top:2px">+2.35%</div>
+<div style="font-size:9px;color:#999;margin-top:2px">今日涨幅</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 底部Tab栏 -->
+<div style="background:#fff;display:flex;border-top:1px solid #eee">
+<div style="flex:1;text-align:center;padding:6px 0"><div style="font-size:16px">🏠</div><div style="font-size:9px;color:#1677FF;font-weight:600">首页</div></div>
+<div style="flex:1;text-align:center;padding:6px 0"><div style="font-size:16px">💰</div><div style="font-size:9px;color:#999">理财</div></div>
+<div style="flex:1;text-align:center;padding:6px 0"><div style="font-size:16px">💬</div><div style="font-size:9px;color:#999">消息</div></div>
+<div style="flex:1;text-align:center;padding:6px 0"><div style="font-size:16px">👤</div><div style="font-size:9px;color:#999">我的</div></div>
+</div>
+</div>
+<!-- 色值条 -->
+<div style="display:flex;height:36px;border-radius:8px;overflow:hidden;margin-top:8px">
+<div style="flex:5;background:#1677FF;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px">#1677FF</div>
+<div style="flex:3;background:#F5F5F5;display:flex;align-items:center;justify-content:center;color:#333;font-size:11px">#F5F5F5</div>
+<div style="flex:1;background:#FF6010;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px">#FF6010</div>
+<div style="flex:1;background:#333333;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px">#333</div>
+</div>
+</div>
+<div style="font-size:13px;color:#555">
+<p><b>🎨 配色方案：</b>蓝色单色 + 橙色互补点缀</p>
+<p><b>🎭 情感传递：</b></p>
+<ul style="padding-left:20px;margin:6px 0;line-height:2">
+<li><b>蓝色(#1677FF)</b>：信任、安全、专业 —— 你的钱放在这里是安全的</li>
+<li><b>灰白大面积</b>：简洁、严肃 —— 金融产品的基调</li>
+<li><b>橙色点缀(#FF6010)</b>：互补色做CTA —— 在蓝色背景上极其醒目</li>
+</ul>
+<p><b>📐 分析：</b>蓝色+灰白构建信任基底，橙色互补色做行动引导。这就是「蓝橙经典互补」配色的完美实战。几乎所有金融App都选蓝色——因为蓝色=信任，这是跨文化的心理共识。</p>
+</div>
+</div>
+
+<!-- 案例4: Spotify -->
+<h3 id="s5-4">案例 4：Spotify</h3>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:16px 0">
+<div>
+<!-- 模拟 Spotify App 界面 -->
+<div style="border-radius:16px;overflow:hidden;border:1px solid #333;box-shadow:0 4px 16px rgba(0,0,0,.3);margin-bottom:12px;max-width:320px;background:#121212">
+<!-- 顶部状态栏 -->
+<div style="background:#121212;padding:8px 16px;display:flex;justify-content:space-between;align-items:center;font-size:10px;color:#aaa">
+<span>9:41</span>
+<div style="display:flex;gap:4px;align-items:center"><span>📶</span><span>🔋</span></div>
+</div>
+<!-- 问候区 -->
+<div style="padding:12px 16px 8px">
+<div style="font-size:18px;font-weight:700;color:#fff;margin-bottom:12px">Good evening</div>
+<!-- 快捷入口网格 -->
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+<div style="display:flex;align-items:center;background:#2a2a2a;border-radius:4px;overflow:hidden;height:48px">
+<div style="width:48px;height:48px;background:linear-gradient(135deg,#450af5,#c4efd9);flex-shrink:0"></div>
+<span style="font-size:11px;color:#fff;padding:0 8px;font-weight:600">Daily Mix 1</span>
+</div>
+<div style="display:flex;align-items:center;background:#2a2a2a;border-radius:4px;overflow:hidden;height:48px">
+<div style="width:48px;height:48px;background:linear-gradient(135deg,#1DB954,#191414);flex-shrink:0"></div>
+<span style="font-size:11px;color:#fff;padding:0 8px;font-weight:600">Liked Songs</span>
+</div>
+<div style="display:flex;align-items:center;background:#2a2a2a;border-radius:4px;overflow:hidden;height:48px">
+<div style="width:48px;height:48px;background:linear-gradient(135deg,#e8115b,#f59b23);flex-shrink:0"></div>
+<span style="font-size:11px;color:#fff;padding:0 8px;font-weight:600">Release Radar</span>
+</div>
+<div style="display:flex;align-items:center;background:#2a2a2a;border-radius:4px;overflow:hidden;height:48px">
+<div style="width:48px;height:48px;background:linear-gradient(135deg,#509bf5,#2d46b9);flex-shrink:0"></div>
+<span style="font-size:11px;color:#fff;padding:0 8px;font-weight:600">Chill Vibes</span>
+</div>
+</div>
+</div>
+<!-- 推荐区域 -->
+<div style="padding:16px 16px 8px">
+<div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:10px">Made for you</div>
+<div style="display:flex;gap:10px;overflow:hidden">
+<div style="flex-shrink:0;width:100px">
+<div style="width:100px;height:100px;border-radius:4px;background:linear-gradient(135deg,#1e3264,#e61e32)"></div>
+<div style="font-size:10px;color:#b3b3b3;margin-top:6px;line-height:1.3">Based on your<br>recent listening</div>
+</div>
+<div style="flex-shrink:0;width:100px">
+<div style="width:100px;height:100px;border-radius:4px;background:linear-gradient(135deg,#8c67ab,#e91e63)"></div>
+<div style="font-size:10px;color:#b3b3b3;margin-top:6px;line-height:1.3">Discover<br>Weekly</div>
+</div>
+</div>
+</div>
+<!-- 底部播放条 -->
+<div style="margin:8px 8px;background:#282828;border-radius:6px;padding:6px 10px;display:flex;align-items:center;gap:8px">
+<div style="width:36px;height:36px;border-radius:4px;background:linear-gradient(135deg,#af2896,#509bf5);flex-shrink:0"></div>
+<div style="flex:1;min-width:0"><div style="font-size:11px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Blinding Lights</div><div style="font-size:9px;color:#b3b3b3">The Weeknd</div></div>
+<span style="color:#1DB954;font-size:16px">▶</span>
+</div>
+<!-- 底部Tab栏 -->
+<div style="display:flex;border-top:1px solid #282828;padding-top:4px">
+<div style="flex:1;text-align:center;padding:6px 0"><div style="font-size:16px">🏠</div><div style="font-size:9px;color:#fff;font-weight:600">Home</div></div>
+<div style="flex:1;text-align:center;padding:6px 0"><div style="font-size:16px">🔍</div><div style="font-size:9px;color:#b3b3b3">Search</div></div>
+<div style="flex:1;text-align:center;padding:6px 0"><div style="font-size:16px">📚</div><div style="font-size:9px;color:#b3b3b3">Library</div></div>
+</div>
+</div>
+<!-- 色值条 -->
+<div style="display:flex;height:36px;border-radius:8px;overflow:hidden;margin-top:8px">
+<div style="flex:6;background:#121212;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px">#121212</div>
+<div style="flex:2;background:#282828;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px">#282828</div>
+<div style="flex:1;background:#1DB954;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px">#1DB954</div>
+<div style="flex:1;background:#b3b3b3;display:flex;align-items:center;justify-content:center;color:#333;font-size:10px">#B3B3B3</div>
+</div>
+</div>
+<div style="font-size:13px;color:#555">
+<p><b>🎨 配色方案：</b>暗色背景 + 绿色荧光点缀</p>
+<p><b>🎭 情感传递：</b></p>
+<ul style="padding-left:20px;margin:6px 0;line-height:2">
+<li><b>深黑(#121212)</b>：沉浸、专注、神秘 —— 沉浸在音乐中</li>
+<li><b>亮绿(#1DB954)</b>：活力、年轻、科技 —— 在深色中特别跳跃醒目</li>
+<li><b>暗灰层次(#282828)</b>：卡片分层，信息层次清晰</li>
+<li><b>多彩渐变封面</b>：歌单用渐变色增加视觉趣味，打破黑色单调</li>
+</ul>
+<p><b>📐 分析：</b>深色底+荧光色点缀 = 「科技/未来」配色的典范。绿色只占不到10%，但在纯黑背景上极度醒目。这就是6:3:1法则的极致运用——大面积黑色创造沉浸感，一抹绿色引导操作。歌单封面的渐变色成为视觉焦点，引导用户点击。</p>
+</div>
+</div>
+
+<!-- 分析练习 -->
+<h3 id="s5-quiz" style="margin-top:40px">🧪 配色分析练习</h3>
+<p>看下面这些模拟界面，试着分析它们的<b>配色方案类型、情感表达、为什么有效</b>：</p>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:20px 0">
+<!-- 练习1 -->
+<div style="border:1px solid #e8e8e8;border-radius:12px;overflow:hidden">
+<div style="background:linear-gradient(135deg,#0A0E27,#1A1A3E);padding:24px;text-align:center">
+<div style="color:#00E5FF;font-size:24px;font-weight:700;margin-bottom:8px">CyberTech</div>
+<div style="color:#76FF03;font-size:12px">NEXT-GEN SOLUTIONS</div>
+<div style="margin-top:16px;display:flex;gap:8px;justify-content:center">
+<span style="padding:6px 16px;border-radius:16px;background:#00E5FF;color:#0A0E27;font-size:11px;font-weight:600">探索产品</span>
+<span style="padding:6px 16px;border-radius:16px;border:1px solid #7C4DFF;color:#7C4DFF;font-size:11px">了解更多</span>
+</div>
+<div style="display:flex;height:32px;border-radius:6px;overflow:hidden;margin-top:16px">
+<div style="flex:1;background:#0A0E27"></div><div style="flex:1;background:#1A1A3E"></div>
+<div style="flex:1;background:#00E5FF"></div><div style="flex:1;background:#76FF03"></div><div style="flex:1;background:#7C4DFF"></div>
+</div>
+</div>
+<div style="padding:16px;background:#fff;font-size:12px;color:#555">
+<p style="margin:0 0 6px"><b>❓ 请分析：</b></p>
+<p style="margin:0;color:#999">配色方案？情感？为什么这样配色有效？</p>
+<details style="margin-top:10px">
+<summary style="cursor:pointer;color:#4A90D9;font-weight:600">👀 查看答案</summary>
+<div style="margin-top:8px;padding:10px;background:#f8f9fa;border-radius:8px;font-size:12px">
+<p style="margin:0 0 4px"><b>方案：</b>深色底 + 荧光多色点缀（类似三角配色的科技变体）</p>
+<p style="margin:0 0 4px"><b>情感：</b>未来感、科技感、前卫、创新、极客</p>
+<p style="margin:0"><b>有效原因：</b>暗色背景(B<15%)营造沉浸科技感，荧光色(S:100% B:100%)在暗底上对比度极高，视觉冲击强。青+绿+紫三色点缀让画面不单调且有层次。</p>
+</div>
+</details>
+</div>
+</div>
+
+<!-- 练习2 -->
+<div style="border:1px solid #e8e8e8;border-radius:12px;overflow:hidden">
+<div style="background:linear-gradient(135deg,#FFF0F5,#FFE4E1);padding:24px;text-align:center">
+<div style="color:#E91E63;font-size:24px;font-weight:700;margin-bottom:8px">花漾</div>
+<div style="color:#AD1457;font-size:12px">每一天都值得被宠爱</div>
+<div style="margin-top:16px;display:flex;gap:8px;justify-content:center">
+<span style="padding:6px 16px;border-radius:16px;background:#E91E63;color:#fff;font-size:11px;font-weight:600">立即体验</span>
+<span style="padding:6px 16px;border-radius:16px;border:1px solid #F48FB1;color:#E91E63;font-size:11px">查看详情</span>
+</div>
+<div style="display:flex;height:32px;border-radius:6px;overflow:hidden;margin-top:16px">
+<div style="flex:1;background:#FCE4EC"></div><div style="flex:1;background:#F8BBD0"></div>
+<div style="flex:1;background:#F48FB1"></div><div style="flex:1;background:#E91E63"></div><div style="flex:1;background:#AD1457"></div>
+</div>
+</div>
+<div style="padding:16px;background:#fff;font-size:12px;color:#555">
+<p style="margin:0 0 6px"><b>❓ 请分析：</b></p>
+<p style="margin:0;color:#999">配色方案？情感？目标用户是谁？</p>
+<details style="margin-top:10px">
+<summary style="cursor:pointer;color:#4A90D9;font-weight:600">👀 查看答案</summary>
+<div style="margin-top:8px;padding:10px;background:#f8f9fa;border-radius:8px;font-size:12px">
+<p style="margin:0 0 4px"><b>方案：</b>粉色单色配色（Monochromatic），从浅粉到深粉红</p>
+<p style="margin:0 0 4px"><b>情感：</b>甜美、温柔、浪漫、女性化、被宠爱感</p>
+<p style="margin:0"><b>目标用户：</b>年轻女性。<b>有效原因：</b>粉色系天然传递「可爱」「浪漫」，单色方案让整体非常和谐统一。深粉做CTA按钮在浅粉背景上清晰可点击。</p>
+</div>
+</details>
+</div>
+</div>
+
+<!-- 练习3 -->
+<div style="border:1px solid #e8e8e8;border-radius:12px;overflow:hidden">
+<div style="background:linear-gradient(135deg,#1B5E20,#2E7D32);padding:24px;text-align:center">
+<div style="color:#fff;font-size:24px;font-weight:700;margin-bottom:8px">🥗 轻食记</div>
+<div style="color:#A5D6A7;font-size:12px">健康饮食 · 美好生活</div>
+<div style="margin-top:16px;display:flex;gap:8px;justify-content:center">
+<span style="padding:6px 16px;border-radius:16px;background:#FF9800;color:#fff;font-size:11px;font-weight:600">开始记录</span>
+<span style="padding:6px 16px;border-radius:16px;border:1px solid #A5D6A7;color:#A5D6A7;font-size:11px">查看食谱</span>
+</div>
+<div style="display:flex;height:32px;border-radius:6px;overflow:hidden;margin-top:16px">
+<div style="flex:1;background:#1B5E20"></div><div style="flex:1;background:#43A047"></div>
+<div style="flex:1;background:#A5D6A7"></div><div style="flex:1;background:#F1F8E9"></div><div style="flex:1;background:#FF9800"></div>
+</div>
+</div>
+<div style="padding:16px;background:#fff;font-size:12px;color:#555">
+<p style="margin:0 0 6px"><b>❓ 请分析：</b></p>
+<p style="margin:0;color:#999">配色方案？为什么CTA按钮用橙色而不用绿色？</p>
+<details style="margin-top:10px">
+<summary style="cursor:pointer;color:#4A90D9;font-weight:600">👀 查看答案</summary>
+<div style="margin-top:8px;padding:10px;background:#f8f9fa;border-radius:8px;font-size:12px">
+<p style="margin:0 0 4px"><b>方案：</b>绿色单色为主 + 橙色互补色做CTA</p>
+<p style="margin:0 0 4px"><b>情感：</b>健康、自然、值得信赖，橙色按钮注入温暖和行动力</p>
+<p style="margin:0"><b>为什么用橙色CTA？</b>因为绿色背景上绿色按钮不够醒目！橙色是绿色的近似互补色，在绿色中极度跳跃，点击率远高于同色系按钮。这就是「互补色做强调色」的实战应用。</p>
+</div>
+</details>
+</div>
+</div>
+
+<!-- 练习4 -->
+<div style="border:1px solid #e8e8e8;border-radius:12px;overflow:hidden">
+<div style="background:linear-gradient(135deg,#1A1A2E,#16213E);padding:24px;text-align:center">
+<div style="color:#C9A84C;font-size:24px;font-weight:700;margin-bottom:8px;letter-spacing:4px">LUXE</div>
+<div style="color:#888;font-size:12px;letter-spacing:2px">HAUTE COUTURE 2026</div>
+<div style="margin-top:16px;display:flex;gap:8px;justify-content:center">
+<span style="padding:6px 16px;border-radius:2px;background:#C9A84C;color:#1A1A2E;font-size:11px;font-weight:600;letter-spacing:1px">EXPLORE</span>
+<span style="padding:6px 16px;border-radius:2px;border:1px solid #C9A84C;color:#C9A84C;font-size:11px;letter-spacing:1px">COLLECTION</span>
+</div>
+<div style="display:flex;height:32px;border-radius:6px;overflow:hidden;margin-top:16px">
+<div style="flex:1;background:#0D0D1A"></div><div style="flex:1;background:#1A1A2E"></div>
+<div style="flex:1;background:#16213E"></div><div style="flex:1;background:#C9A84C"></div><div style="flex:1;background:#F5F5F0"></div>
+</div>
+</div>
+<div style="padding:16px;background:#fff;font-size:12px;color:#555">
+<p style="margin:0 0 6px"><b>❓ 请分析：</b></p>
+<p style="margin:0;color:#999">配色方案？为什么高端品牌都爱用深色+金色？</p>
+<details style="margin-top:10px">
+<summary style="cursor:pointer;color:#4A90D9;font-weight:600">👀 查看答案</summary>
+<div style="margin-top:8px;padding:10px;background:#f8f9fa;border-radius:8px;font-size:12px">
+<p style="margin:0 0 4px"><b>方案：</b>暗色调单色（深蓝黑）+ 金色点缀</p>
+<p style="margin:0 0 4px"><b>情感：</b>高端、奢华、权威、神秘、稀缺感</p>
+<p style="margin:0"><b>为什么有效？</b>深色(B<15%)制造「稀缺」和「神秘」感——人类本能地认为黑暗中的东西更珍贵。金色是全人类共通的「贵重」符号。两者叠加 = 不用说一个字，你就知道这东西很贵。</p>
+</div>
+</details>
+</div>
+</div>
+</div>
+
+<div class="tip k"><strong>🔑 案例分析方法论（三步走）</strong>
+<b>第一步：</b>提取主色，看它在色相环的位置 → 判断色温和基本情感<br>
+<b>第二步：</b>看辅色和主色的关系（邻近？互补？单色？）→ 判断配色方案<br>
+<b>第三步：</b>看饱和度和明度 → 判断色调类型 → 得出更精确的情感<br>
+按这三步，你看到任何设计都能快速解读它的配色意图。
+</div>
+</div>
+</div>
+
+<footer><p>颜色设计完整指南 · UI设计学习 · 2026</p><p style="margin-top:6px">Color is not just what you see — it's what you feel.</p></footer>
+
+<script>
+function hsbToRgb(h,s,b){s/=100;b/=100;const k=n=>(n+h/60)%6;const f=n=>b*(1-s*Math.max(0,Math.min(k(n),4-k(n),1)));return[Math.round(f(5)*255),Math.round(f(3)*255),Math.round(f(1)*255)]}
+function rgb(r,g,b){return`rgb(${r},${g},${b})`}
+
+// C1: 三原色
+!function(){var c=document.getElementById('c1');if(!c)return;var x=c.getContext('2d');
+x.font='13px sans-serif';x.fillStyle='#555';x.textAlign='center';
+x.fillText('颜料三原色（减色法）',160,18);
+// 颜料三原色用 multiply 模拟减色混合
+x.globalAlpha=.85;
+x.globalCompositeOperation='multiply';
+x.beginPath();x.arc(130,125,75,0,Math.PI*2);x.fillStyle='#FF0000';x.fill();
+x.beginPath();x.arc(190,125,75,0,Math.PI*2);x.fillStyle='#FFFF00';x.fill();
+x.beginPath();x.arc(160,178,75,0,Math.PI*2);x.fillStyle='#0000FF';x.fill();
+x.globalCompositeOperation='source-over';x.globalAlpha=1;
+// 光学三原色 - 用 lighter 模拟加色混合，无黑色底板
+x.fillStyle='#555';
+x.fillText('光学三原色（加色法）',520,18);
+x.save();
+x.globalCompositeOperation='lighter';x.globalAlpha=.88;
+x.beginPath();x.arc(492,115,68,0,Math.PI*2);x.fillStyle='#FF0000';x.fill();
+x.beginPath();x.arc(548,115,68,0,Math.PI*2);x.fillStyle='#00FF00';x.fill();
+x.beginPath();x.arc(520,168,68,0,Math.PI*2);x.fillStyle='#0000FF';x.fill();
+x.restore();
+}();
+
+// C2: HSB
+!function(){var c=document.getElementById('c2');if(!c)return;var x=c.getContext('2d');
+var cx=170,cy=175,R=140,r2=95;
+for(var a=0;a<360;a++){var r1=(a-90)*Math.PI/180,ra=(a+1.5-90)*Math.PI/180;
+x.beginPath();x.arc(cx,cy,R,r1,ra);x.arc(cx,cy,r2,ra,r1,true);x.closePath();
+var c2=hsbToRgb(a,100,100);x.fillStyle=rgb(c2[0],c2[1],c2[2]);x.fill();}
+x.beginPath();x.arc(cx,cy,r2-2,0,Math.PI*2);x.fillStyle='#fff';x.fill();
+x.fillStyle='#333';x.font='bold 15px sans-serif';x.textAlign='center';
+x.fillText('H 色相',cx,cy-6);x.font='11px sans-serif';x.fillText('0°~360°',cx,cy+12);
+var lb=[{a:0,t:'0° 红'},{a:60,t:'60° 黄'},{a:120,t:'120° 绿'},{a:180,t:'180° 青'},{a:240,t:'240° 蓝'},{a:300,t:'300° 紫'}];
+x.font='10px sans-serif';x.fillStyle='#666';
+lb.forEach(function(l){var rd=(l.a-90)*Math.PI/180;x.textAlign='center';
+x.fillText(l.t,cx+Math.cos(rd)*(R+18),cy+Math.sin(rd)*(R+18)+4);});
+// SB matrix
+var mx=380,my=30,mw=260,mh=260;
+for(var si=0;si<20;si++)for(var bi=0;bi<20;bi++){var sv=si*5.26,bv=100-bi*5.26;
+var cc=hsbToRgb(210,sv,bv);x.fillStyle=rgb(cc[0],cc[1],cc[2]);x.fillRect(mx+si*(mw/20),my+bi*(mh/20),mw/20+1,mh/20+1);}
+x.fillStyle='#333';x.font='bold 12px sans-serif';x.textAlign='center';
+x.fillText('饱和度 S →',mx+mw/2,my+mh+18);
+x.save();x.translate(mx-14,my+mh/2);x.rotate(-Math.PI/2);x.fillText('← 明度 B',0,0);x.restore();
+x.font='10px sans-serif';x.fillStyle='#fff';x.textAlign='center';
+x.fillText('活泼鲜明',mx+mw-40,my+22);x.fillText('深沉高端',mx+mw-40,my+mh-10);
+x.fillStyle='#555';x.fillText('温柔轻柔',mx+40,my+22);x.fillText('暗沉复古',mx+40,my+mh-10);
+x.fillStyle='#888';x.font='11px sans-serif';x.textAlign='center';
+x.fillText('蓝色(H=210°)的 S×B 矩阵',mx+mw/2,my-10);
+}();
+
+// C3: 色温色相环
+!function(){var c=document.getElementById('c3');if(!c)return;var x=c.getContext('2d');
+var cx=250,cy=140,R=110,r2=70;
+for(var a=0;a<360;a++){var r1=(a-90)*Math.PI/180,ra=(a+1.5-90)*Math.PI/180;
+x.beginPath();x.arc(cx,cy,R,r1,ra);x.arc(cx,cy,r2,ra,r1,true);x.closePath();
+var cc=hsbToRgb(a,80,90);x.fillStyle=rgb(cc[0],cc[1],cc[2]);x.fill();}
+// warm arc
+x.strokeStyle='#FF4500';x.lineWidth=4;x.setLineDash([6,4]);
+x.beginPath();x.arc(cx,cy,R+14,(0-90)*Math.PI/180,(60-90)*Math.PI/180);x.stroke();
+x.beginPath();x.arc(cx,cy,R+14,(300-90)*Math.PI/180,(360-90)*Math.PI/180);x.stroke();
+// cool arc
+x.strokeStyle='#1565C0';
+x.beginPath();x.arc(cx,cy,R+14,(160-90)*Math.PI/180,(260-90)*Math.PI/180);x.stroke();
+x.setLineDash([]);
+// labels
+x.font='11px sans-serif';x.textAlign='center';
+x.fillStyle='#D32F2F';x.fillText('🔥 暖色区',cx+Math.cos((-60)*Math.PI/180)*(R+32),cy+Math.sin((-60)*Math.PI/180)*(R+32));
+x.fillStyle='#1565C0';x.fillText('❄️ 冷色区',cx+Math.cos((120)*Math.PI/180)*(R+32),cy+Math.sin((120)*Math.PI/180)*(R+32));
+x.fillStyle='#388E3C';x.fillText('中性',cx+Math.cos((30)*Math.PI/180)*(R+30),cy+Math.sin((30)*Math.PI/180)*(R+30));
+x.fillStyle='#fff';x.beginPath();x.arc(cx,cy,r2-2,0,Math.PI*2);x.fill();
+x.fillStyle='#555';x.font='bold 12px sans-serif';x.fillText('色温分布',cx,cy+4);
+}();
+
+// C4: 四种色调关系
+!function(){var c=document.getElementById('c4');if(!c)return;var x=c.getContext('2d');
+function drawWheel(cx,cy,R,r2){for(var a=0;a<360;a++){var r1=(a-90)*Math.PI/180,ra=(a+1.5-90)*Math.PI/180;
+x.beginPath();x.arc(cx,cy,R,r1,ra);x.arc(cx,cy,r2,ra,r1,true);x.closePath();
+var cc=hsbToRgb(a,70,85);x.fillStyle=rgb(cc[0],cc[1],cc[2]);x.fill();}
+x.beginPath();x.arc(cx,cy,r2-1,0,Math.PI*2);x.fillStyle='#fff';x.fill();}
+function dot(cx,cy,R,angle,color){var rd=(angle-90)*Math.PI/180;var px=cx+Math.cos(rd)*(R),py=cy+Math.sin(rd)*(R);
+x.beginPath();x.arc(px,py,8,0,Math.PI*2);x.fillStyle=color;x.fill();x.strokeStyle='#fff';x.lineWidth=3;x.stroke();return{x:px,y:py};}
+var items=[{t:'① 同类色 (≤15°)',cx:165,cy:110,angles:[210],clrs:['#1565C0']},
+{t:'② 邻近色 (30°~60°)',cx:495,cy:110,angles:[30,60,90],clrs:['#FF6600','#FFAA00','#CCFF00']},
+{t:'③ 对比色 (120°)',cx:165,cy:330,angles:[0,120],clrs:['#FF0000','#0000FF']},
+{t:'④ 互补色 (180°)',cx:495,cy:330,angles:[0,180],clrs:['#FF0000','#00FFFF']}];
+items.forEach(function(it){var R=80,r2=50;drawWheel(it.cx,it.cy,R,r2);
+x.fillStyle='#333';x.font='bold 12px sans-serif';x.textAlign='center';x.fillText(it.t,it.cx,it.cy-R-12);
+// draw dots and lines
+var pts=[];
+it.angles.forEach(function(a,i){pts.push(dot(it.cx,it.cy,(R+r2)/2,a,it.clrs[i]));});
+if(pts.length>1){x.strokeStyle='rgba(0,0,0,.3)';x.lineWidth=2;x.setLineDash([4,4]);
+x.beginPath();pts.forEach(function(p,i){i===0?x.moveTo(p.x,p.y):x.lineTo(p.x,p.y);});
+if(it.angles.length<=2){}else{x.lineTo(pts[0].x,pts[0].y);}x.stroke();x.setLineDash([]);}});
+}();
+
+// C5: 情感色相环
+!function(){var c=document.getElementById('c5');if(!c)return;var x=c.getContext('2d');
+var cx=260,cy=260,R=200,r2=120;
+for(var a=0;a<360;a++){var r1=(a-90)*Math.PI/180,ra=(a+1.5-90)*Math.PI/180;
+x.beginPath();x.arc(cx,cy,R,r1,ra);x.arc(cx,cy,r2,ra,r1,true);x.closePath();
+var cc=hsbToRgb(a,85,90);x.fillStyle=rgb(cc[0],cc[1],cc[2]);x.fill();}
+x.beginPath();x.arc(cx,cy,r2-1,0,Math.PI*2);x.fillStyle='#fff';x.fill();
+var labels=[{a:0,t:'热情·活力'},{a:30,t:'温暖·友好'},{a:60,t:'乐观·快乐'},
+{a:120,t:'自然·健康'},{a:180,t:'清新·科技'},{a:210,t:'信任·专业'},
+{a:270,t:'神秘·深邃'},{a:300,t:'高贵·创意'},{a:330,t:'甜美·浪漫'}];
+x.font='11px sans-serif';
+labels.forEach(function(l){var rd=(l.a-90)*Math.PI/180;var px=cx+Math.cos(rd)*(R+28);var py=cy+Math.sin(rd)*(R+28);
+x.fillStyle='#444';x.textAlign='center';x.fillText(l.t,px,py+4);});
+x.fillStyle='#333';x.font='bold 14px sans-serif';x.textAlign='center';
+x.fillText('色相环',cx,cy-8);x.font='12px sans-serif';x.fillStyle='#888';x.fillText('情感分布',cx,cy+10);
+}();
+
+// C6: 色调情感对比
+!function(){var c=document.getElementById('c6');if(!c)return;var x=c.getContext('2d');
+var tones=[
+{name:'纯色调\nVivid',s:100,b:100,emo:'活力·年轻·醒目'},
+{name:'明色调\nTint',s:25,b:95,emo:'轻柔·治愈·温和'},
+{name:'暗色调\nShade',s:90,b:30,emo:'沉稳·高端·权威'},
+{name:'浊色调\nMuted',s:35,b:55,emo:'复古·文艺·知性'},
+{name:'灰色调\nGrayish',s:8,b:60,emo:'低调·中性·专业'}];
+var w=120,gap=14,startX=20;
+tones.forEach(function(t,i){
+var xp=startX+i*(w+gap),yp=30;
+var cc=hsbToRgb(210,t.s,t.b);
+x.fillStyle=rgb(cc[0],cc[1],cc[2]);
+x.beginPath();x.moveTo(xp+10,yp);x.lineTo(xp+w-10,yp);x.quadraticCurveTo(xp+w,yp,xp+w,yp+10);
+x.lineTo(xp+w,yp+180-10);x.quadraticCurveTo(xp+w,yp+180,xp+w-10,yp+180);
+x.lineTo(xp+10,yp+180);x.quadraticCurveTo(xp,yp+180,xp,yp+180-10);
+x.lineTo(xp,yp+10);x.quadraticCurveTo(xp,yp,xp+10,yp);x.fill();
+// name
+x.fillStyle=t.b>60&&t.s<50?'#333':'#fff';x.font='bold 13px sans-serif';x.textAlign='center';
+var lines=t.name.split('\n');lines.forEach(function(l,li){x.fillText(l,xp+w/2,yp+80+li*18);});
+// HSB
+x.font='11px sans-serif';
+x.fillText('S:'+t.s+'% B:'+t.b+'%',xp+w/2,yp+130);
+// emotion below
+x.fillStyle='#444';x.font='12px sans-serif';
+var emos=t.emo.split('·');emos.forEach(function(e,ei){x.fillText(e.trim(),xp+w/2,yp+210+ei*18);});
+});
+x.fillStyle='#999';x.font='11px sans-serif';x.textAlign='center';
+x.fillText('← 全部基于蓝色 H=210° →',340,340);
+}();
+
+// C7: S×B 情感矩阵
+!function(){var c=document.getElementById('c7');if(!c)return;var x=c.getContext('2d');
+var mx=60,my=50,mw=360,mh=360;
+for(var si=0;si<30;si++)for(var bi=0;bi<30;bi++){
+var sv=si*3.33,bv=100-bi*3.33;
+var cc=hsbToRgb(210,sv,bv);x.fillStyle=rgb(cc[0],cc[1],cc[2]);
+x.fillRect(mx+si*(mw/30),my+bi*(mh/30),mw/30+1,mh/30+1);}
+x.fillStyle='#333';x.font='bold 12px sans-serif';x.textAlign='center';
+x.fillText('饱和度 S →',mx+mw/2,my+mh+22);
+x.save();x.translate(mx-20,my+mh/2);x.rotate(-Math.PI/2);x.fillText('← 明度 B',0,0);x.restore();
+// corner labels
+x.font='bold 12px sans-serif';
+x.fillStyle='#fff';x.textAlign='right';x.fillText('🔥 活泼年轻',mx+mw-8,my+20);
+x.fillText('💎 深沉高端',mx+mw-8,my+mh-8);
+x.fillStyle='#666';x.textAlign='left';x.fillText('🍼 温柔治愈',mx+8,my+20);
+x.fillText('📖 复古怀旧',mx+8,my+mh-8);
+}();
+
+// C8: 631 比例
+!function(){var c=document.getElementById('c8');if(!c)return;var x=c.getContext('2d');
+var y=20,h=80,w=680;
+// 60%
+x.fillStyle='#1976D2';x.beginPath();x.moveTo(10,y);x.lineTo(w*.6-5,y);
+x.quadraticCurveTo(w*.6,y,w*.6,y+5);x.lineTo(w*.6,y+h-5);
+x.quadraticCurveTo(w*.6,y+h,w*.6-5,y+h);x.lineTo(10,y+h);
+x.quadraticCurveTo(5,y+h,5,y+h-5);x.lineTo(5,y+5);x.quadraticCurveTo(5,y,10,y);x.fill();
+// 30%
+x.fillStyle='#90CAF9';var x1=w*.6+4;
+x.beginPath();x.moveTo(x1+5,y);x.lineTo(x1+w*.3-5,y);x.quadraticCurveTo(x1+w*.3,y,x1+w*.3,y+5);
+x.lineTo(x1+w*.3,y+h-5);x.quadraticCurveTo(x1+w*.3,y+h,x1+w*.3-5,y+h);
+x.lineTo(x1+5,y+h);x.quadraticCurveTo(x1,y+h,x1,y+h-5);x.lineTo(x1,y+5);x.quadraticCurveTo(x1,y,x1+5,y);x.fill();
+// 10%
+x.fillStyle='#FF9800';var x2=x1+w*.3+4;
+x.beginPath();x.moveTo(x2+5,y);x.lineTo(x2+w*.1-10,y);x.quadraticCurveTo(x2+w*.1-5,y,x2+w*.1-5,y+5);
+x.lineTo(x2+w*.1-5,y+h-5);x.quadraticCurveTo(x2+w*.1-5,y+h,x2+w*.1-10,y+h);
+x.lineTo(x2+5,y+h);x.quadraticCurveTo(x2,y+h,x2,y+h-5);x.lineTo(x2,y+5);x.quadraticCurveTo(x2,y,x2+5,y);x.fill();
+// text
+x.fillStyle='#fff';x.font='bold 16px sans-serif';x.textAlign='center';
+x.fillText('60% 主色',w*.3,y+h/2+6);
+x.fillText('30% 辅色',x1+w*.15,y+h/2+6);
+x.fillStyle='#fff';x.fillText('10%',x2+w*.05-2,y+h/2+6);
+// bottom labels
+x.fillStyle='#888';x.font='11px sans-serif';
+x.fillText('背景/大色块',w*.3,y+h+18);x.fillText('支撑色',x1+w*.15,y+h+18);x.fillText('强调色',x2+w*.05-2,y+h+18);
+}();
+
+/* === 侧边栏导航逻辑 === */
+function toggleSidebar(){
+  document.body.classList.toggle('sidebar-open');
+  document.getElementById('sidebarNav').classList.toggle('visible');
+}
+// 默认展开侧边栏（桌面端）
+if(window.innerWidth>640){
+  document.body.classList.add('sidebar-open');
+  document.getElementById('sidebarNav').classList.add('visible');
+}
+
+// 滚动时高亮当前章节
+!function(){
+  var links=document.querySelectorAll('.sidebar-list a');
+  var ids=[];
+  links.forEach(function(a){
+    var id=a.getAttribute('href');
+    if(id&&id.startsWith('#'))ids.push({el:document.getElementById(id.slice(1)),a:a});
+  });
+  var ticking=false;
+  function onScroll(){
+    if(ticking)return;
+    ticking=true;
+    requestAnimationFrame(function(){
+      var scrollY=window.scrollY||document.documentElement.scrollTop;
+      var current=null;
+      for(var i=0;i<ids.length;i++){
+        if(ids[i].el&&ids[i].el.getBoundingClientRect().top<=120)current=ids[i];
+      }
+      links.forEach(function(a){a.classList.remove('active')});
+      if(current)current.a.classList.add('active');
+      ticking=false;
+    });
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+}();
+
+// 点击导航链接后在移动端自动收起
+document.querySelectorAll('.sidebar-list a').forEach(function(a){
+  a.addEventListener('click',function(){
+    if(window.innerWidth<=640){
+      document.body.classList.remove('sidebar-open');
+      document.getElementById('sidebarNav').classList.remove('visible');
+    }
+  });
+});
+</script>
+</body>
+</html>
